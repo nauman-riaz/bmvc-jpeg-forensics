@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q&amp;A appendix · BMVC 2026</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="stage.css">
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body class="appendix">
+<main>
+  <header>
+    <a href="index.html#/thank-you/0">Back to the talk</a>
+    <h1>Q&amp;A appendix</h1>
+    <nav aria-label="Appendix sections">
+      <a href="#testingset">DocTamper TestingSet</a>
+      <a href="#fcd">FCD</a>
+      <a href="#scd">SCD</a>
+      <a href="#receipts">Tampered-SROIE</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#wfe">FFDN ablation</a>
+    </nav>
+  </header>
+  <div id="results-tables"></div>
+  <section id="metrics">
+    <h2>Metric definitions</h2>
+    <h3>Detection Failure Rate (DFR)</h3>
+    <p>At each IoU cutoff, measure the share of images whose predicted and annotated tampered regions overlap at or below the cutoff. Average the six rates at cutoffs from 0 to 0.5 in increments of 0.1.</p>
+    <h3>False Positive Area (FPA)</h3>
+    <p>For each image, divide the number of pixels falsely flagged as tampered by the full image area. Average that fraction across images.</p>
+  </section>
+  <section id="wfe">
+    <h2>FFDN ablation</h2>
+    <p>Pixel F1 (%) before and after PRC, with and without the Wavelet-like Frequency Enhancement module. The Vision Enhancement module remains in both configurations.</p>
+    <div id="wfe-table"></div>
+  </section>
+  <footer>Mistaking Periodicity for Manipulation · BMVC 2026</footer>
+</main>
+<script src="results.js"></script>
+<script src="appendix.js"></script>
+</body>
+</html>

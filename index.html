@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nauman Riaz’s twelve-minute BMVC 2026 talk on JPEG-grid bias in document tampering detection.">
+  <title>Mistaking Periodicity for Manipulation · BMVC 2026</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.css">
+  <link rel="stylesheet" href="stage.css?v=story10">
+  <link rel="stylesheet" href="methods.css?v=story10">
+  <script src="audience-mode.js"></script>
+</head>
+<body>
+<main class="reveal" aria-label="BMVC presentation">
+  <div class="slides">
+    <section id="title" class="cover dark" data-background-color="#153633" data-title="Mistaking Periodicity for Manipulation" data-location="Opening" data-transition="fade" data-auto-animate="true" data-auto-animate-id="receipt-opening">
+      <div class="cover-copy">
+        <p class="eyebrow">British Machine Vision Conference · 2026</p>
+        <h1>Mistaking<br>Periodicity for<br><em>Manipulation</em></h1>
+        <p class="subtitle">JPEG-Induced Structural Bias in<br>Document Tampering Detection</p>
+        <div class="credit">
+          <strong>Nauman Riaz*</strong>, Ali Hussain*, Saifullah Saifullah*,<br>
+          Muhammad Imran Malik, Stefan Agne, Andreas Dengel, Sheraz Ahmed
+          <small>* Equal contribution · RPTU, DFKI, DeepReader and NUST</small>
+        </div>
+      </div>
+      <figure class="intro-receipt">
+        <div class="receipt-viewport" data-morph="opening-receipt"><img src="assets/docforgenet-receipt.png" alt="Restaurant receipt with line items and totals"></div>
+        <figcaption>Receipt example · Source: DocForgeNet, Fig. 1</figcaption>
+      </figure>
+    </section>
+
+    <section id="motivation" data-title="Where was this receipt changed?" data-location="Motivation" data-auto-animate="true" data-auto-animate-id="receipt-opening">
+      <div class="motivation-copy">
+        <p class="eyebrow">Document forgery localization</p>
+        <h2>Where was this<br>receipt <em>changed?</em></h2>
+        <p class="fragment fade-up" data-fragment-index="0">A detector has to mark the altered pixels.</p>
+      </div>
+      <figure class="intro-receipt">
+        <div class="receipt-viewport" data-morph="opening-receipt">
+          <div class="receipt-registration">
+            <img src="assets/docforgenet-receipt.png" alt="Restaurant receipt with line items and totals">
+            <img class="receipt-outline fragment" data-fragment-index="0" src="assets/docforgenet-receipt-gt.png" alt="Ground truth outlines the printed total">
+          </div>
+        </div>
+        <figcaption><span class="receipt-input-label">Receipt example · Source: DocForgeNet, Fig. 1</span><span class="receipt-annotation fragment" data-fragment-index="0">Ground truth marks the total</span></figcaption>
+      </figure>
+    </section>
+
+    <section id="forgery-types" data-title="Where does the replacement come from?" data-location="Forgery types">
+      <h2>Where does the replacement come from?</h2>
+      <div class="forgery-cases">
+        <article class="forgery-case same-source">
+          <h3>Copy–move</h3>
+          <div class="forgery-scene" role="img" aria-label="Copy 48.50 from Item A into the total on the same receipt">
+            <div class="sample-page" aria-hidden="true">
+              <p class="sample-heading">Sales receipt</p>
+              <p><span>Item A</span><b class="sample-source">48.50</b></p>
+              <p><span>Item B</span><b>34.40</b></p>
+              <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+            </div>
+            <span class="transfer-arrow same-arrow" aria-hidden="true"></span>
+          </div>
+          <p>From another field on the same page</p>
+        </article>
+        <article class="forgery-case fragment fade-up" data-fragment-index="0">
+          <h3>Splicing</h3>
+          <div class="forgery-scene" role="img" aria-label="Paste the 48.50 total from a separate receipt into the target receipt">
+            <div class="sample-page" aria-hidden="true">
+              <p class="sample-heading">Sales receipt</p>
+              <p><span>Item A</span><b>51.30</b></p>
+              <p><span>Item B</span><b>31.60</b></p>
+              <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+            </div>
+            <div class="alternate-source donor-page" aria-hidden="true"><span>Donor receipt</span><b class="sample-source">48.50</b></div>
+            <span class="transfer-arrow external-arrow" aria-hidden="true"></span>
+          </div>
+          <p>From a separate document</p>
+        </article>
+        <article class="forgery-case fragment fade-up" data-fragment-index="1">
+          <h3>Generated text</h3>
+          <div class="forgery-scene" role="img" aria-label="Render 48.50 as a new text patch and insert it into the target receipt">
+            <div class="sample-page" aria-hidden="true">
+              <p class="sample-heading">Sales receipt</p>
+              <p><span>Item A</span><b>51.30</b></p>
+              <p><span>Item B</span><b>31.60</b></p>
+              <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+            </div>
+            <div class="alternate-source render-tile" aria-hidden="true"><span>Text renderer</span><b class="sample-source">48.50</b></div>
+            <span class="transfer-arrow external-arrow" aria-hidden="true"></span>
+          </div>
+          <p>From a newly rendered patch</p>
+        </article>
+      </div>
+      <p class="footnote">Schematic examples</p>
+    </section>
+
+    <section id="current-detectors" data-title="Detectors can localize subtle edits" data-location="Existing detection" data-auto-animate="true" data-auto-animate-id="jpeg-scope">
+      <p class="eyebrow">Existing methods · DocTamper example</p>
+      <h2>Detectors can localize subtle edits</h2>
+      <p class="detector-context">Small changes to a receipt’s date and time</p>
+      <div class="detector-comparison">
+        <figure>
+          <figcaption>Input document</figcaption>
+          <div class="scope-document" data-morph="jpeg-scope-document"><img src="assets/current-detectors-input.png" alt="Published receipt example with subtle edits to the date and time near the bottom"></div>
+        </figure>
+        <figure>
+          <figcaption>Ground truth</figcaption>
+          <img src="assets/current-detectors-truth.png" alt="Published annotation marks the two edited digits in red, with authentic pixels in blue">
+        </figure>
+        <figure class="fragment fade-in" data-fragment-index="0">
+          <figcaption>DTD prediction</figcaption>
+          <img src="assets/current-detectors-dtd.png" alt="DTD localizes the edited digits, with some additional flagged pixels on the receipt">
+        </figure>
+        <figure class="fragment fade-in" data-fragment-index="0">
+          <figcaption>ADCD-Net prediction</figcaption>
+          <img src="assets/current-detectors-adcd.png" alt="ADCD-Net prediction closely localizes the annotated edits to the date and time">
+        </figure>
+      </div>
+      <p class="published-mask-key"><span class="published-tampered" aria-hidden="true"></span> Forged <span class="published-pristine" aria-hidden="true"></span> Authentic</p>
+      <p class="detector-question fragment fade-up" data-fragment-index="0">What clues make this possible?</p>
+      <p class="footnote">Published overlays · Wong et al., ICCV 2025, supplementary Fig. B (first Test example)</p>
+    </section>
+
+    <section id="jpeg-scope" data-title="Our focus: JPEG document images" data-location="Why JPEG?" data-auto-animate="true" data-auto-animate-id="jpeg-scope">
+      <p class="eyebrow">Scope of this study</p>
+      <h2>Our focus: JPEG document images</h2>
+      <div class="jpeg-scope-layout">
+        <figure>
+          <div class="scope-document" data-morph="jpeg-scope-document"><img src="assets/current-detectors-input.png" alt="The receipt from the preceding slide, illustrating the document-image setting"></div>
+          <figcaption>Document image from the preceding example</figcaption>
+        </figure>
+        <div class="jpeg-scope-copy">
+          <h3>Widely used in digital imaging</h3>
+          <p>Used to store and share camera images.<br>Also an output format for mobile document scanners.</p>
+          <div class="jpeg-scope-features fragment fade-up" data-fragment-index="0">
+            <h3>The evaluated detectors combine</h3>
+            <dl>
+              <div><dt>RGB</dt><dd>Visual appearance</dd></div>
+              <div><dt>DCT</dt><dd>JPEG compression traces</dd></div>
+            </dl>
+            <p class="jpeg-scope-study">Six detectors combining RGB and DCT features</p>
+          </div>
+        </div>
+      </div>
+      <p class="footnote">Sources: JPEG Committee · Google ML Kit document scanner · BMVC experimental setup</p>
+    </section>
+
+    <section id="jpeg-grid" data-title="JPEG block boundaries" data-location="JPEG mechanism">
+      <p class="eyebrow">JPEG compression</p>
+      <h2>An 8 × 8 grid can leave forensic traces</h2>
+      <div class="jpeg-mechanism">
+        <figure>
+          <div class="jpeg-detail">
+            <img src="assets/prc-input.png" alt="Magnified text from the document shown in the prediction comparison">
+            <div class="jpeg-detail-grid" aria-hidden="true"></div>
+            <div class="jpeg-detail-block" aria-hidden="true"></div>
+          </div>
+          <figcaption><strong>One 8 × 8 block</strong> · Schematic grid over a document crop</figcaption>
+        </figure>
+        <div class="jpeg-explanation">
+          <p class="jpeg-cell-explanation">JPEG transforms and quantizes each block independently.</p>
+          <div class="jpeg-phase-comparison fragment fade-in" data-fragment-index="0">
+            <p class="jpeg-phase-label">When a previously compressed patch is pasted</p>
+            <div class="jpeg-phase-pair">
+              <figure>
+                <div class="jpeg-phase-diagram" role="img" aria-label="The pasted region carries block boundaries offset from the destination grid">
+                  <div class="jpeg-phase-patch jpeg-phase-offset" aria-hidden="true">48.50</div>
+                </div>
+                <figcaption><strong>Misaligned</strong> · Edges meet different blocks</figcaption>
+              </figure>
+              <figure>
+                <div class="jpeg-phase-diagram" role="img" aria-label="The pasted region carries block boundaries that line up with the destination grid">
+                  <div class="jpeg-phase-patch jpeg-phase-matched" aria-hidden="true">48.50</div>
+                </div>
+                <figcaption><strong>Aligned</strong> · Block boundaries line up</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="jpeg-probes fragment fade-up" data-fragment-index="1">
+            <p><strong>GAF</strong> Align the edit</p>
+            <p><strong>PRC</strong> Shift the grid</p>
+            <p class="jpeg-scope">Six detectors on DocTamper</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gaf" data-title="Grid-Aligned Forgery" data-location="GAF method">
+      <p class="eyebrow gaf-accent">Test 1 · Align the edit</p>
+      <h2>Grid-Aligned Forgery</h2>
+      <div class="gaf-method-layout">
+        <svg class="gaf-geometry" viewBox="0 0 900 430" role="img" aria-labelledby="gaf-diagram-title gaf-diagram-description">
+          <title id="gaf-diagram-title">The same copy–move edit, with and without grid alignment</title>
+          <desc id="gaf-diagram-description">Two pairs of source and target text regions. Reveal the JPEG grid, expand the right-hand boxes to whole blocks, then copy 48.50 over 82.90. The control patch carries a grid that is offset from its target; the aligned patch carries a grid that matches.</desc>
+          <defs>
+            <pattern id="bmvc-gaf-grid" x="20" y="88" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#91a79a" stroke-width="1.2"/></pattern>
+            <marker id="bmvc-gaf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10" fill="#526961"/></marker>
+          </defs>
+          <g class="gaf-control-panel">
+            <text x="20" y="25" class="gaf-panel-title">Paired unaligned edit</text>
+            <text x="20" y="72" class="gaf-region-label">Source</text>
+            <rect x="20" y="88" width="384" height="96" class="gaf-canvas"/>
+            <rect x="20" y="88" width="384" height="96" class="gaf-grid"/>
+            <text x="155" y="151" class="gaf-amount">48.50</text>
+            <rect x="143" y="113" width="127" height="51" class="gaf-box"/>
+            <text x="20" y="264" class="gaf-region-label">Target</text>
+            <rect x="20" y="280" width="384" height="96" class="gaf-canvas"/>
+            <rect x="20" y="280" width="384" height="96" class="gaf-grid"/>
+            <text x="163" y="335" class="gaf-amount">82.90</text>
+            <rect x="151" y="297" width="127" height="51" class="gaf-box"/>
+            <path d="M338 197 C367 217 367 241 338 257" class="gaf-copy-arrow" marker-end="url(#bmvc-gaf-arrow)"/>
+            <g class="gaf-moving-patch">
+              <rect x="143" y="113" width="127" height="51" class="gaf-patch-paper"/>
+              <rect x="143" y="113" width="127" height="51" class="gaf-grid gaf-patch-grid"/>
+              <text x="155" y="151" class="gaf-amount">48.50</text>
+              <rect x="143" y="113" width="127" height="51" class="gaf-box gaf-patch-border"/>
+            </g>
+            <text x="20" y="418" class="gaf-outcome gaf-offset-outcome">Pasted grid is misaligned</text>
+          </g>
+          <g transform="translate(460 0)" class="gaf-aligned-panel">
+            <text x="20" y="25" class="gaf-panel-title">GAF · aligned edit</text>
+            <text x="20" y="72" class="gaf-region-label">Source</text>
+            <rect x="20" y="88" width="384" height="96" class="gaf-canvas"/>
+            <rect x="20" y="88" width="384" height="96" class="gaf-grid"/>
+            <text x="155" y="151" class="gaf-amount">48.50</text>
+            <rect x="143" y="113" width="127" height="51" class="gaf-box gaf-snap-source"/>
+            <text x="20" y="264" class="gaf-region-label">Target</text>
+            <rect x="20" y="280" width="384" height="96" class="gaf-canvas"/>
+            <rect x="20" y="280" width="384" height="96" class="gaf-grid"/>
+            <text x="163" y="335" class="gaf-amount">82.90</text>
+            <rect x="151" y="297" width="127" height="51" class="gaf-box gaf-snap-target"/>
+            <path d="M338 197 C367 217 367 241 338 257" class="gaf-copy-arrow" marker-end="url(#bmvc-gaf-arrow)"/>
+            <g class="gaf-moving-patch">
+              <rect x="143" y="113" width="127" height="51" class="gaf-patch-paper gaf-snap-source"/>
+              <rect x="143" y="113" width="127" height="51" class="gaf-grid gaf-patch-grid gaf-snap-source"/>
+              <text x="155" y="151" class="gaf-amount">48.50</text>
+              <rect x="143" y="113" width="127" height="51" class="gaf-box gaf-patch-border gaf-snap-source"/>
+            </g>
+            <text x="20" y="418" class="gaf-outcome">Pasted grid stays aligned</text>
+          </g>
+        </svg>
+        <ol class="gaf-method-steps">
+          <li class="fragment fade-in" data-fragment-index="0"><span>01</span><div><strong>Reveal the grid</strong><p>Each cell is 8 × 8 pixels.</p></div></li>
+          <li class="fragment fade-in" data-fragment-index="1"><span>02</span><div><strong>Snap both boxes</strong><p>Expand source and target to the enclosing block boundaries.</p></div></li>
+          <li class="fragment fade-in" data-fragment-index="2"><span>03</span><div><strong>Copy the patch</strong><p>Watch the source grid travel with the replacement text.</p></div></li>
+        </ol>
+      </div>
+      <p class="gaf-common-protocol"><strong>Matched in both branches</strong> Selected text, forgery operation and JPEG schedule.</p>
+      <p class="footnote">Copy–move schematic · The same boundary alignment applies to splicing and rendered text.</p>
+      <span class="state-message method-screen-reader" aria-live="polite">Source and target text regions selected</span>
+    </section>
+
+    <section id="gaf-results" data-title="Grid alignment can hide forged text" data-location="GAF evidence">
+      <p class="eyebrow gaf-accent">Grid-Aligned Forgery · BMVC Figure 1(a)</p>
+      <h2>Grid alignment can hide forged text</h2>
+      <div class="gaf-opening-layout">
+        <figure>
+          <figcaption>Ground truth</figcaption>
+          <img src="assets/gaf-regions.png" alt="Figure 1(a): grid-aligned edits in red and standard edits in blue">
+          <p class="gaf-opening-key"><span class="gaf-opening-dot aligned"></span> Grid-aligned edits <span class="gaf-opening-dot standard"></span> Standard edits</p>
+        </figure>
+        <figure class="fragment fade-in" data-fragment-index="0">
+          <figcaption>Detector prediction</figcaption>
+          <div class="gaf-opening-prediction">
+            <img src="assets/gaf-prediction.png" alt="The prediction misses the lower red edit while flagging the standard edit on one-line">
+            <span class="gaf-missed-outline" aria-hidden="true"></span>
+          </div>
+          <p class="gaf-opening-key"><span class="gaf-opening-dot predicted"></span> Flagged pixels</p>
+        </figure>
+        <div class="gaf-opening-observations fragment fade-up" data-fragment-index="0">
+          <p><strong>Aligned edit</strong><span>Missed in the dashed box</span></p>
+          <p><strong>Standard edit</strong><span>“one-line” is detected</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gaf-comparison" class="single-score gaf-score" data-title="GAF reduces F1 across all six detectors" data-location="GAF results across models">
+      <p class="eyebrow">DocTamper TestingSet · Copy–move · Pixel F1</p>
+      <h2>GAF reduces F1 across all six detectors</h2>
+      <div class="score-board" role="table" aria-label="GAF pixel F1 comparison across six detectors on DocTamper TestingSet">
+        <div class="score-row score-header" role="row">
+          <span role="columnheader">Detector</span>
+          <div class="score-heading" role="columnheader">
+            <p><span class="dot-key"></span> Paired unaligned edit <span class="dot-key treatment"></span> Aligned edit</p>
+          </div>
+        </div>
+        <div id="gaf-model-scores" role="rowgroup"></div>
+      </div>
+      <div class="score-row score-axis" aria-hidden="true">
+        <span></span>
+        <div class="score-cell"><div class="score-ticks"><span>0%</span><span>50%</span><span>100%</span></div></div>
+      </div>
+      <div class="single-score-summary">
+        <p><strong>8.6–47.0</strong> percentage-point loss</p>
+        <p class="fragment fade-up" data-fragment-index="0">Also on Tampered-SROIE receipts:<br><strong>all six detectors lose F1</strong></p>
+      </div>
+    </section>
+
+    <section id="prediction" class="dark" data-background-color="#153633" data-title="What if we shift the grid instead?" data-location="The opposite error" data-transition="fade">
+      <p class="eyebrow">Test 2 · Keep the existing edit</p>
+      <h2>What if we <em>shift the grid instead?</em></h2>
+      <div class="opening-pair">
+        <figure>
+          <img src="assets/prc-before.png" alt="Prediction before the grid shift marks two words in green">
+          <figcaption>Prediction with the original grid</figcaption>
+        </figure>
+        <figure>
+          <div class="mask-crossfade">
+            <img src="assets/prc-before.png" alt="" aria-hidden="true">
+            <img class="fragment fade-in" data-fragment-index="0" src="assets/prc-after.png" alt="Prediction after the grid shift flags text across the page">
+          </div>
+          <figcaption><span class="shift-before-label">Same starting prediction</span><span class="shift-after-label">After shifting the JPEG grid</span></figcaption>
+        </figure>
+      </div>
+      <p class="comparison-note">No new forgery is added. Green marks the detector’s output.</p>
+    </section>
+
+    <section id="prc" data-title="Pad–Recompress–Crop" data-location="PRC method">
+      <p class="eyebrow prc-accent">Test 2 · Shift the grid</p>
+      <h2>Pad–Recompress–Crop</h2>
+      <div class="prc-method-layout">
+        <div class="prc-method-comparison">
+          <figure>
+            <h3>Baseline</h3>
+            <div class="prc-method-diagram" role="img" aria-label="The baseline JPEG grid starts at the original top-left image corner">
+              <img src="assets/prc-input.png" alt="" aria-hidden="true">
+              <div class="prc-method-grid" aria-hidden="true"></div>
+              <div class="prc-method-origin" aria-hidden="true"></div>
+            </div>
+            <figcaption>JPEG grid starts at the image corner</figcaption>
+          </figure>
+          <figure>
+            <h3>PRC</h3>
+            <div class="prc-method-diagram prc-method-treatment" role="img" aria-label="The fixed text stays in the original frame as padding on the top and left moves the JPEG grid origin">
+              <div class="prc-method-padding" aria-hidden="true"></div>
+              <img src="assets/prc-input.png" alt="" aria-hidden="true">
+              <div class="prc-method-grid" aria-hidden="true"></div>
+              <div class="prc-method-origin" aria-hidden="true"></div>
+            </div>
+            <figcaption><span class="state-message" aria-live="polite">Original block alignment</span></figcaption>
+          </figure>
+          <p class="prc-method-key"><span aria-hidden="true"></span> JPEG encoding origin</p>
+        </div>
+        <ol class="prc-method-actions">
+          <li class="fragment fade-up" data-fragment-index="0"><strong>Pad</strong><span>Add 4 pixels at the top and left.</span></li>
+          <li class="fragment fade-up" data-fragment-index="1"><strong>Recompress</strong><span>JPEG starts at the padded corner.</span></li>
+          <li class="fragment fade-up" data-fragment-index="2"><strong>Crop</strong><span>Restore the original image dimensions. JPEG block boundaries stay shifted.</span></li>
+        </ol>
+      </div>
+      <p class="footnote">Schematic grid · The original forgery and JPEG schedule are matched across both branches.</p>
+    </section>
+
+    <section id="prc-results" data-title="A grid shift can flag authentic text" data-location="PRC evidence">
+      <p class="eyebrow prc-accent">Pad–Recompress–Crop · DocTamper TestingSet</p>
+      <h2>A grid shift can flag authentic text</h2>
+      <div class="named-evidence prc-named">
+        <figure>
+          <div class="registered-evidence">
+            <img src="assets/prc-example.png" alt="Already forged input from the named DocForgeNet PRC case">
+            <span class="evidence-layer prc-truth" role="img" aria-label="Ground-truth outlines around the annotated edited regions"></span>
+            <span class="evidence-layer prc-true-positive fragment fade-in" data-fragment-index="0" role="img" aria-label="Pixels correctly flagged as forged"></span>
+            <span class="evidence-layer prc-false-positive fragment fade-in" data-fragment-index="0" role="img" aria-label="False positives across many text lines"></span>
+          </div>
+          <figcaption>Illustrative detector output · DocForgeNet</figcaption>
+        </figure>
+        <div class="evidence-summary">
+          <ul class="overlay-key">
+            <li><span class="key-outline" aria-hidden="true"></span> Ground truth</li>
+            <li class="fragment fade-in" data-fragment-index="0"><span class="key-fill" aria-hidden="true"></span> True positive</li>
+            <li class="fragment fade-in" data-fragment-index="0"><span class="key-fill false-positive" aria-hidden="true"></span> False positive</li>
+          </ul>
+          <div class="aggregate prc-aggregate fragment fade-up" data-fragment-index="1">
+            <h3>Across the six evaluated detectors</h3>
+            <p class="metric-figures"><strong>0.1–21.5%</strong></p>
+            <p>Range of mean false-positive share of full image area after PRC</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prc-comparison" class="single-score prc-score" data-title="PRC affects detectors differently" data-location="PRC results across models">
+      <p class="eyebrow">DocTamper TestingSet · Pixel F1</p>
+      <h2>PRC affects detectors differently</h2>
+      <div class="score-board" role="table" aria-label="PRC pixel F1 comparison across six detectors on DocTamper TestingSet">
+        <div class="score-row score-header" role="row">
+          <span role="columnheader">Detector</span>
+          <div class="score-heading" role="columnheader">
+            <p><span class="dot-key"></span> Original forgery, recompressed <span class="dot-key treatment"></span> Shifted grid</p>
+          </div>
+        </div>
+        <div id="prc-model-scores" role="rowgroup"></div>
+      </div>
+      <div class="score-row score-axis" aria-hidden="true">
+        <span></span>
+        <div class="score-cell"><div class="score-ticks"><span>0%</span><span>50%</span><span>100%</span></div></div>
+      </div>
+      <div class="single-score-summary">
+        <p><strong>5 / 6</strong> detectors lose F1</p>
+        <p>One improves on this split.<br>The response depends on the detector.</p>
+      </div>
+    </section>
+
+    <section id="takeaway" class="dark conclusion" data-background-color="#153633" data-title="Two ways to stress-test localization" data-location="Synthesis" data-auto-animate="true" data-auto-animate-id="closing">
+      <h2>Two ways to stress-test localization</h2>
+      <div class="conclusion-pair">
+        <figure>
+          <div class="registered-evidence closing-gaf" data-morph="closing-gaf">
+            <img src="assets/gaf-prediction.png" alt="The GAF example: the aligned edit in the dashed box is missed, while standard edits are flagged in green">
+            <span class="gaf-missed-outline" aria-hidden="true"></span>
+          </div>
+          <figcaption>GAF · Aligned edit missed</figcaption>
+        </figure>
+        <figure>
+          <div class="registered-evidence" data-morph="closing-prc">
+            <img src="assets/prc-example.png" alt="The document cropped for the DocForgeNet PRC example">
+            <span class="evidence-layer prc-truth" role="img" aria-label="Outlines around the annotated edited regions"></span>
+            <span class="evidence-layer prc-true-positive" role="img" aria-label="Pixels correctly flagged as forged"></span>
+            <span class="evidence-layer prc-false-positive" role="img" aria-label="False positives outside the annotated edits"></span>
+          </div>
+          <figcaption>PRC · Authentic text flagged</figcaption>
+        </figure>
+      </div>
+      <p class="conclusion-line fragment fade-up" data-fragment-index="0">Test for missed edits and false alarms when the JPEG grid changes.</p>
+    </section>
+
+    <section id="thank-you" class="dark conclusion finale" data-background-color="#153633" data-title="Thank you and discussion" data-location="Discussion" data-auto-animate="true" data-auto-animate-id="closing">
+      <div class="finale-copy">
+        <h2>Thank <em>you.</em></h2>
+        <p>Nauman Riaz · <a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
+      </div>
+      <div class="conclusion-pair">
+        <figure>
+          <div class="registered-evidence closing-gaf" data-morph="closing-gaf">
+            <img src="assets/gaf-prediction.png" alt="The GAF example: the aligned edit in the dashed box is missed, while standard edits are flagged in green">
+            <span class="gaf-missed-outline" aria-hidden="true"></span>
+          </div>
+          <figcaption>GAF · Aligned edit missed</figcaption>
+        </figure>
+        <figure>
+          <div class="registered-evidence" data-morph="closing-prc">
+            <img src="assets/prc-example.png" alt="The document cropped for the DocForgeNet PRC example">
+            <span class="evidence-layer prc-truth" role="img" aria-label="Outlines around the annotated edited regions"></span>
+            <span class="evidence-layer prc-true-positive" role="img" aria-label="Pixels correctly flagged as forged"></span>
+            <span class="evidence-layer prc-false-positive" role="img" aria-label="False positives outside the annotated edits"></span>
+          </div>
+          <figcaption>PRC · Authentic text flagged</figcaption>
+        </figure>
+      </div>
+      <p class="conclusion-line">Test for missed edits and false alarms when the JPEG grid changes.</p>
+      <nav class="discussion" aria-label="Discussion slide shortcuts">
+        <a href="#/forgery-types" data-go="forgery-types">Forgery types</a>
+        <a href="#/gaf-results" data-go="gaf-results">GAF example</a>
+        <a href="#/gaf" data-go="gaf">GAF method</a>
+        <a href="#/prc" data-go="prc">PRC method</a>
+        <a href="#/gaf-comparison" data-go="gaf-comparison">GAF results</a>
+        <a href="#/prc-comparison" data-go="prc-comparison">PRC results</a>
+        <a href="appendix.html" target="_blank" rel="noopener">Q&amp;A appendix</a>
+      </nav>
+    </section>
+  </div>
+</main>
+<div class="reading-progress"><span></span></div>
+<nav class="presentation-bar" aria-label="Presentation controls">
+  <span id="chapter-location">Opening</span>
+  <div>
+    <button id="start-presenting-button">Start presenting</button>
+    <button id="notes-button">Notes</button>
+    <button id="audience-mode-button">Clean view</button>
+    <button id="closing-button">Closing</button>
+    <a href="appendix.html" target="_blank" rel="noopener">Appendix</a>
+    <button id="help-button" aria-label="Keyboard shortcuts">?</button>
+    <button id="previous-button" aria-label="Previous step">←</button>
+    <button id="next-button" aria-label="Next step">→</button>
+    <span id="step-count"></span>
+  </div>
+</nav>
+<dialog id="help-dialog">
+  <h2>Presentation shortcuts</h2>
+  <dl><dt>← / →</dt><dd>Previous / next reveal</dd><dt>S</dt><dd>Presenter window</dd><dt>T</dt><dd>Audience / rehearsal view</dd><dt>F</dt><dd>Fullscreen</dd><dt>O</dt><dd>Slide overview</dd><dt>End</dt><dd>Closing and Q&A links</dd></dl>
+  <button id="close-help">Close</button>
+</dialog>
+<dialog id="references-dialog" aria-label="Paper reference">
+  <p>Riaz et al. <cite>Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection</cite>. British Machine Vision Conference, 2026.</p>
+  <p><a href="appendix.html" target="_blank" rel="noopener">Full results and metric definitions</a></p>
+  <button>Close</button>
+</dialog>
+<script src="vendor/reveal.js"></script>
+<script src="step-notes.js"></script>
+<script src="presenter.js"></script>
+<script src="results.js"></script>
+<script src="narration.js?v=story10"></script>
+<script src="deck.js?v=story10"></script>
+</body>
+</html>
+
