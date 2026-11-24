@@ -36,13 +36,21 @@ window.BmvcNarration = {
   "detector-design": {
     "source": "DTD architecture adapted from Qu et al., Towards Robust Tampered Text Detection in Document Image, CVPR 2023, Figure 4 and §4.2. The diagram groups the encoder and decoder into feature fusion and mask prediction. The receipt is the same published example from Wong et al., ICCV 2025 supplementary Figure B. ADCD-Net also models RGB and DCT features. The six detectors and their input modalities are described in the BMVC paper’s Experimental Setup.",
     "steps": [
-      "Take DTD. One branch sees the receipt we see. The other reads its JPEG frequency coefficients, together with the table used to quantize them. These are called DCT coefficients, from the discrete cosine transform. When a changed digit looks convincing, the way it was compressed can offer another clue. All six detectors we studied were designed to use both image pixels and frequency information. That led us to ask a question about how JPEG represents this page."
+      "Take DTD. One branch sees the receipt we see. The other reads the JPEG frequency coefficients and the table used to quantize them. All six detectors we studied use both image pixels and frequency information. What do those coefficients describe? Let’s stay with the date on this receipt."
+    ]
+  },
+  "jpeg-blocks": {
+    "source": "BMVC manuscript, JPEG Compression Model. This is an illustrative 8 × 8 grid drawn on the displayed receipt excerpt from Wong et al., ICCV 2025 supplementary Figure B. The highlighted cell illustrates one block crossing a digit edge. The diagram does not recover the JPEG grid origin of the source file.",
+    "steps": [
+      "Look at the date inside the outline. When JPEG compresses an image, it processes each eight-by-eight block separately. Let’s zoom in.",
+      "In this block, the ink meets the paper. The discrete cosine transform, or DCT, describes how brightness varies inside the block, from broad changes to fine detail. JPEG rounds those coefficients to discrete levels. Each set of values belongs to one block at one position. What happens when we paste text somewhere else?"
     ]
   },
   "jpeg-grid": {
-    "source": "BMVC manuscript JPEG Compression Model and Experimental Setup. Grid and overlays are schematic. The study evaluates six detectors that use RGB and DCT features.",
+    "source": "BMVC manuscript, JPEG Compression Model and Experimental Setup. Both illustrations show the same pasted amount and use the same highlight. The offset is enlarged for legibility. Predictions are introduced with the GAF results.",
     "steps": [
-      "JPEG computes those coefficients in blocks of eight by eight pixels. Here is the same replacement amount in two positions relative to those blocks. On the left the boundary pattern inside the patch is offset from the surrounding page. On the right the boundaries line up. If you were the detector, which edit would you expect to be easier to find? [Pause.] Here is how we tested that prediction."
+      "Here is the same replacement amount in two pastes. The patch carries a block pattern from its source. Follow the red line down from the surrounding page to the top of each patch.",
+      "On the right, it carries straight through. On the left, the boundary inside the patch picks up over here. [Point to the offset and pause.] Both amounts were pasted. Would you expect the detector to find them equally well? Here is how we tested that."
     ]
   },
   "gaf": {

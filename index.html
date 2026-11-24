@@ -8,7 +8,7 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/reset.css">
   <link rel="stylesheet" href="vendor/reveal.css">
-  <link rel="stylesheet" href="stage.css?v=evidence-2">
+  <link rel="stylesheet" href="stage.css?v=jpeg-refresher">
   <link rel="stylesheet" href="methods.css?v=forensic-red">
   <script src="audience-mode.js"></script>
 </head>
@@ -159,20 +159,59 @@
       </div>
     </section>
 
+    <section id="jpeg-blocks" data-title="Where does the JPEG grid come from?" data-location="JPEG compression" data-auto-animate data-auto-animate-id="detector-receipt">
+      <div class="slide-body">
+        <h2>Where does the JPEG grid come from?</h2>
+        <div class="jpeg-block-layout">
+          <svg class="receipt-detail" data-morph="detector-receipt" viewBox="0 0 497 495" role="img" aria-label="The same receipt. The view zooms into the date and highlights one eight-by-eight block at the edge of a digit.">
+            <defs>
+              <pattern id="receipt-block-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+                <path d="M0.2 8V0.2H8" fill="none" stroke="#584d48" stroke-width=".35"/>
+              </pattern>
+            </defs>
+            <g class="receipt-detail-plane">
+              <image href="assets/current-detectors-input.png" width="497" height="495"/>
+              <rect class="date-window" x="225" y="383" width="110" height="110" fill="none" stroke-width="3"/>
+              <g class="receipt-block-overlay">
+                <rect width="497" height="495" fill="url(#receipt-block-grid)"/>
+                <rect x="280" y="432" width="8" height="8" fill="none" stroke="#fff9ed" stroke-width="1.6"/>
+                <rect class="chosen-block" x="280" y="432" width="8" height="8" stroke-width=".85"/>
+              </g>
+            </g>
+          </svg>
+          <div class="block-copy">
+            <h3>8 × 8 pixels</h3>
+            <p>JPEG divides the image into blocks of this size.</p>
+            <div class="block-explanation fragment fade-in" data-fragment-index="0">
+              <h4>Inside the highlighted block</h4>
+              <p>The DCT describes how brightness varies. JPEG rounds the resulting coefficients to discrete levels.</p>
+            </div>
+          </div>
+        </div>
+        <p class="source">Illustrative grid over the receipt from <a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf">Wong et al., ICCV 2025 supplement, Fig. B</a></p>
+      </div>
+    </section>
+
     <section id="jpeg-grid" data-title="Would the detector find both edits?" data-location="JPEG block boundaries">
       <div class="slide-body">
         <h2>Would the detector find both edits?</h2>
-        <p class="deck-sub">JPEG computes its frequency coefficients in 8 × 8 blocks.</p>
+        <p class="deck-sub">Follow the red line to the edge of the pasted amount.</p>
         <div class="grid-pair">
           <figure>
             <h3>Misaligned</h3>
-            <div class="grid-demo" role="img" aria-label="Pasted block boundaries are offset from the surrounding JPEG block boundaries"><div class="patch" aria-hidden="true">48.50</div></div>
-            <figcaption class="caption">Block boundaries are offset across the paste.</figcaption>
+            <div class="grid-demo misaligned" role="img" aria-label="The red grid boundary above the patch ends at its edge. Inside, the highlighted boundary resumes to the right.">
+              <span class="outer-guide" aria-hidden="true"></span>
+              <div class="patch" aria-hidden="true">48.50<span class="inner-guide fragment fade-in" data-fragment-index="0"></span></div>
+            </div>
+            <figcaption class="caption fragment fade-in" data-fragment-index="0">Inside the patch, the line resumes to the right.</figcaption>
           </figure>
           <figure>
             <h3>Aligned</h3>
-            <div class="grid-demo" role="img" aria-label="Pasted block boundaries line up with the surrounding JPEG block boundaries"><div class="patch aligned" aria-hidden="true">48.50</div></div>
-            <figcaption class="caption">Block boundaries line up across the paste.</figcaption>
+            <div class="grid-demo" role="img" aria-label="The highlighted grid boundary continues through the edge of the pasted patch in a straight line.">
+              <span class="outer-guide" aria-hidden="true"></span>
+              <div class="patch" aria-hidden="true">48.50<span class="inner-guide fragment fade-in" data-fragment-index="0"></span></div>
+            </div>
+            <figcaption class="caption fragment fade-in" data-fragment-index="0">The line continues straight through.</figcaption>
           </figure>
         </div>
       </div>
@@ -410,7 +449,7 @@
 <script src="step-notes.js"></script>
 <script src="presenter.js"></script>
 <script src="results.js"></script>
-<script src="narration.js?v=evidence-2"></script>
+<script src="narration.js?v=jpeg-refresher"></script>
 <script src="deck.js?v=evidence-2"></script>
 </body>
 </html>

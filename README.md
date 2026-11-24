@@ -6,7 +6,7 @@ Nauman Riaz · BMVC 2026 conference presentation
 
 [Open the presentation](https://nauman-riaz.github.io/bmvc-jpeg-forensics/)
 
-The 14-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
+The 15-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
 
 - Arrow keys or Space advance through slides and reveals.
 - **T** shows or hides the rehearsal toolbar.
