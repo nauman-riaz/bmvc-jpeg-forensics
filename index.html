@@ -8,7 +8,7 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/reset.css">
   <link rel="stylesheet" href="vendor/reveal.css">
-  <link rel="stylesheet" href="stage.css?v=forensic-red">
+  <link rel="stylesheet" href="stage.css?v=evidence-2">
   <link rel="stylesheet" href="methods.css?v=forensic-red">
   <script src="audience-mode.js"></script>
 </head>
@@ -140,10 +140,29 @@
       </div>
     </section>
 
-    <section id="jpeg-grid" data-title="What if the JPEG grids line up?" data-location="JPEG block boundaries">
+    <section id="detector-design" data-title="What else can the detector see?" data-location="Detector design" data-auto-animate data-auto-animate-id="detector-receipt">
       <div class="slide-body">
-        <h2>What if the JPEG grids line up?</h2>
-        <p class="deck-sub">JPEG processes image data in 8 × 8 blocks.</p>
+        <h2>What else can the detector see?</h2>
+        <div class="architecture-layout">
+          <figure>
+            <img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="The receipt with the two changed digits">
+            <figcaption class="caption">The same receipt</figcaption>
+          </figure>
+          <div class="detector-flow" role="img" aria-label="In DTD, image pixels feed the Visual Perception Head. JPEG DCT coefficients and the quantization table feed the Frequency Perception Head. The model fuses features from both branches to predict the edited pixels.">
+            <h3>Inside DTD</h3>
+            <div class="detector-input visual-input"><span>Image pixels</span><strong>Visual Perception Head</strong></div>
+            <div class="detector-input frequency-input"><span>JPEG DCT coefficients + quantization table</span><strong>Frequency Perception Head</strong></div>
+            <div class="fusion-output">Fused features <span aria-hidden="true">→</span> Predicted mask</div>
+          </div>
+        </div>
+        <p class="source"><a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Qu_Towards_Robust_Tampered_Text_Detection_in_Document_Image_New_Dataset_CVPR_2023_paper.pdf#page=5">Architecture adapted from Qu et al., CVPR 2023, Fig. 4</a> · Receipt from Wong et al., ICCV 2025 supplement, Fig. B</p>
+      </div>
+    </section>
+
+    <section id="jpeg-grid" data-title="Would the detector find both edits?" data-location="JPEG block boundaries">
+      <div class="slide-body">
+        <h2>Would the detector find both edits?</h2>
+        <p class="deck-sub">JPEG computes its frequency coefficients in 8 × 8 blocks.</p>
         <div class="grid-pair">
           <figure>
             <h3>Misaligned</h3>
@@ -162,7 +181,7 @@
     <section id="gaf" data-title="Grid-Aligned Forgery" data-location="GAF method">
       <div class="slide-body">
         <h2>Grid-Aligned Forgery</h2>
-        <p class="deck-sub">Compare paired edits of the same selected text.</p>
+        <p class="deck-sub">How we made a matched pair of copy–move edits</p>
             <div class="gaf-method-layout">
               <svg class="gaf-geometry" viewBox="0 0 900 430" role="img" aria-labelledby="gaf-diagram-title gaf-diagram-description">
                 <title id="gaf-diagram-title">The same copy–move edit, with and without grid alignment</title>
@@ -215,7 +234,7 @@
                 </g>
               </svg>
               <ol class="gaf-method-steps">
-                <li class="fragment fade-in" data-fragment-index="0"><span>01</span><div><strong>Reveal the grid</strong><p>Each cell is 8 × 8 pixels.</p></div></li>
+                <li class="fragment fade-in" data-fragment-index="0"><span>01</span><div><strong>Reveal the grid</strong><p>Locate both text boxes.</p></div></li>
                 <li class="fragment fade-in" data-fragment-index="1"><span>02</span><div><strong>Snap both boxes</strong><p>Expand source and target to the enclosing block boundaries.</p></div></li>
                 <li class="fragment fade-in" data-fragment-index="2"><span>03</span><div><strong>Copy the patch</strong><p>Watch the source grid travel with the replacement text.</p></div></li>
               </ol>
@@ -226,9 +245,10 @@
       </div>
     </section>
 
-    <section id="gaf-results" data-title="The aligned edit can go unmarked" data-location="GAF evidence">
+    <section id="gaf-results" data-title="Which edit does the detector mark?" data-location="GAF evidence">
       <div class="slide-body">
-        <h2>The aligned edit can go unmarked</h2>
+        <h2>Which edit does the detector mark?</h2>
+        <p class="deck-sub">One document contains both aligned and standard edits.</p>
         <div class="pair evidence">
           <figure><figcaption class="caption">Ground truth</figcaption><div class="plate"><img src="assets/gaf-regions.png" alt="Paper figure with aligned edits in red and standard edits in blue"></div></figure>
           <figure class="fragment fade-in" data-fragment-index="0"><figcaption class="caption">Detector prediction</figcaption><div class="plate"><img src="assets/gaf-prediction.png" alt="Green predictions mark standard edits and leave the aligned red regions unmarked"><div class="missed" aria-hidden="true"></div></div></figure>
@@ -252,7 +272,9 @@
             <div id="gaf-model-scores" role="rowgroup"></div>
             <div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
           </div>
-          <div><p class="stat">8.6–47</p><p class="stat-label">percentage-point loss</p><p class="stat-detail">All six also lose F1 on Tampered-SROIE copy–move.</p></div>
+          <div><p class="stat">8.6–47</p><p class="stat-label">percentage-point loss</p><p class="stat-detail">All six also lose F1 on Tampered-SROIE copy–move.</p>
+            <div class="failure-detail fragment fade-in" data-fragment-index="0"><p>CAT-Net’s detection failure rate</p><strong>0.23 → 0.57</strong></div>
+          </div>
         </div>
       </div>
     </section>
@@ -298,30 +320,38 @@
     <section id="prc-results" data-title="A grid shift can trigger false alarms" data-location="PRC evidence">
       <div class="slide-body">
         <h2>A grid shift can trigger false alarms</h2>
-        <div class="pair evidence">
-          <figure><figcaption class="caption">Original grid</figcaption><div class="plate"><img src="assets/prc-before.png" alt="Prediction with original grid marks two words in green"></div></figure>
-          <figure class="fragment fade-in" data-fragment-index="0"><figcaption class="caption">Shifted grid</figcaption><div class="plate"><img src="assets/prc-after.png" alt="Prediction after a grid shift marks text across most of the visible page"></div></figure>
-          <aside class="annotation fragment fade-in" data-fragment-index="0"><p><b>Same underlying edit</b>Green predictions spread across authentic text.</p></aside>
+        <div class="prc-evidence-stages">
+          <div class="pair evidence prc-predictions">
+            <figure><figcaption class="caption">Original grid</figcaption><div class="plate"><img src="assets/prc-before.png" alt="Prediction with original grid marks two words in green"></div></figure>
+            <figure class="fragment fade-in" data-fragment-index="0"><figcaption class="caption">Shifted grid</figcaption><div class="plate"><img src="assets/prc-after.png" alt="The same detector marks many more words after the grid shift"></div></figure>
+            <aside class="annotation fragment fade-in" data-fragment-index="0"><p><b>Same page, same edit</b>The prediction spreads to more lines.</p></aside>
+          </div>
+          <div class="prc-annotated fragment fade-in" data-fragment-index="1">
+            <p class="annotated-lead">A second page with its ground truth</p>
+            <div class="prc-panels">
+              <figure><figcaption>Document</figcaption><img src="assets/prc-example.png" alt="DocTamper document excerpt from the TestingSet row"></figure>
+              <figure><figcaption>Ground truth</figcaption><img src="assets/prc-truth.png" alt="Two small regions in red are annotated as edited"></figure>
+              <figure><figcaption>DTD after PRC</figcaption><img src="assets/prc-dtd-figure4.png" alt="Blue true positives occupy small patches, while yellow false positives cover many surrounding lines"></figure>
+            </div>
+            <p class="mask-key"><span><i class="mask-truth"></i>Edited pixels</span><span><i class="mask-hit"></i>Correctly flagged</span><span><i class="mask-false"></i>Falsely flagged</span></p>
+          </div>
         </div>
-        <p class="source">BMVC paper · Figure 1(b) · Green marks detector predictions</p>
+        <p class="source prc-predictions">BMVC paper · Figure 1(b) · Green marks detector predictions</p>
+        <p class="source fragment fade-in" data-fragment-index="1">BMVC paper · Figure 4 · DocTamper TestingSet row, with the corresponding annotation and DTD output</p>
       </div>
     </section>
 
-    <section id="prc-comparison" data-title="Most detectors lose F1 after the shift" data-location="PRC results across models">
+    <section id="prc-comparison" data-title="How much of the page is falsely flagged?" data-location="PRC results across models">
       <div class="slide-body">
-        <h2>Most detectors lose F1 after the shift</h2>
-        <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
+        <h2>How much of the page is falsely flagged?</h2>
+        <p class="deck-sub">Mean false-positive area after PRC · DocTamper TestingSet</p>
         <div class="chart-wrap">
-          <div class="chart" role="table" aria-label="Original forgery, recompressed and shifted grid pixel F1">
-            <div class="legend" role="row">
-              <span role="columnheader" class="visually-hidden">Detector</span>
-              <span role="columnheader"><span class="baseline-marker" aria-hidden="true"></span> Original forgery, recompressed
-                <strong><span class="treatment-marker" aria-hidden="true"></span> Shifted grid</strong></span>
-            </div>
+          <div class="chart fpa-chart" role="table" aria-label="Mean false-positive area after PRC by detector">
+            <div class="legend" role="row"><span class="visually-hidden" role="columnheader">Detector</span><span role="columnheader">Falsely flagged pixels as a share of the whole page</span></div>
             <div id="prc-model-scores" role="rowgroup"></div>
-            <div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+            <div class="chart-scale" aria-hidden="true"><span>0%</span><span>25%</span></div>
           </div>
-          <div><p class="stat">5 of 6</p><p class="stat-label">detectors lose pixel F1</p><p class="stat-detail">Across models, mean false-positive area after PRC ranges from 0.1% to 21.5% of the full image.</p></div>
+          <div><p class="stat">21.5%</p><p class="stat-label">of the page on average for the most affected detector</p><p class="stat-detail">Four detectors are at or below 1.1%. Five of six lose pixel F1.</p></div>
         </div>
       </div>
     </section>
@@ -330,7 +360,7 @@
       <div class="slide-body hook closing">
         <div>
           <h2>Would it still<br>find <span class="accent">this digit?</span></h2>
-          <p class="deck-sub">Test for missed edits and false alarms across JPEG alignments.</p>
+          <p class="deck-sub">GAF tests for missed edits. PRC tests for false alarms.</p>
           <p class="email fragment fade-in" data-fragment-index="0">Thank you<br><a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
         </div>
         <figure>
@@ -380,8 +410,8 @@
 <script src="step-notes.js"></script>
 <script src="presenter.js"></script>
 <script src="results.js"></script>
-<script src="narration.js?v=ivory-story"></script>
-<script src="deck.js?v=ivory-story"></script>
+<script src="narration.js?v=evidence-2"></script>
+<script src="deck.js?v=evidence-2"></script>
 </body>
 </html>
 

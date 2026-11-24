@@ -201,6 +201,21 @@ strong,.headline {font-weight:700}
 .prediction-set img {width:100%;aspect-ratio:1;object-fit:cover;outline:1px solid var(--rule)}
 .prediction-key {font-size:22px;color:var(--muted);margin-top:20px}
 .prediction-key span {display:inline-block;width:15px;height:15px;margin-right:8px;background:#b67a78}
+.architecture-layout {display:grid;grid-template-columns:300px 1fr;gap:78px;align-items:center;margin:auto 0}
+.architecture-layout figure img {width:100%;outline:1px solid var(--rule)}
+.detector-flow {display:grid;grid-template-columns:1fr 1fr;gap:0 26px;align-items:stretch}
+.detector-flow h3 {grid-column:1 / -1;margin-bottom:31px;font:44px/1.05 var(--serif)}
+.detector-input {position:relative;padding:19px 15px 23px;border-top:3px solid var(--rule);background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.detector-input span {font-size:23px;color:var(--muted)}
+.detector-input strong {font-size:27px}
+.frequency-input {border-color:var(--accent-ink)}
+.frequency-input strong {color:var(--accent-ink)}
+.detector-input::after {content:"";position:absolute;top:100%;width:calc(50% + 13px);height:24px;border-bottom:2px solid var(--muted)}
+.visual-input::after {left:50%;border-left:2px solid var(--muted)}
+.frequency-input::after {right:50%;border-right:2px solid var(--muted)}
+.fusion-output {position:relative;grid-column:1 / -1;justify-self:center;margin-top:53px;font-size:27px}
+.fusion-output::before {content:"";position:absolute;left:50%;bottom:calc(100% + 5px);height:22px;border-left:2px solid var(--muted)}
+.fusion-output span {padding:0 7px;color:var(--muted)}
 .grid-pair {gap:34px;display:grid;grid-template-columns:repeat(2,1fr);margin:auto 0}
 .grid-pair figure {min-width:0}
 .grid-pair h3 {margin-bottom:16px}
@@ -225,6 +240,19 @@ strong,.headline {font-weight:700}
 .annotation {align-self:center;font-size:24px;line-height:1.35;padding-left:16px;border-left:2px solid var(--accent-ink)}
 .annotation p+p {margin-top:20px}
 .annotation b {display:block;margin-bottom:5px;color:var(--accent-ink)}
+.prc-evidence-stages {display:grid;align-items:center;flex:1;min-height:0}
+.prc-evidence-stages > div {grid-area:1 / 1}
+#prc-results[data-step="2"] .prc-predictions {visibility:hidden}
+#prc-results[data-step="2"] .prc-predictions .fragment {visibility:hidden}
+.annotated-lead {font:36px var(--serif);margin-bottom:24px}
+.prc-panels {display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.prc-panels figcaption {font-size:24px;margin-bottom:12px}
+.prc-panels img {width:100%;outline:1px solid var(--rule)}
+.mask-key {display:flex;gap:30px;align-items:center;color:var(--muted);font-size:22px;margin-top:20px}
+.mask-key i {display:inline-block;width:14px;height:14px;box-shadow:0 0 0 1px #746861;vertical-align:baseline;margin-right:9px}
+.mask-truth {background:red}
+.mask-hit {background:blue}
+.mask-false {background:yellow}
 .chart-wrap {display:grid;grid-template-columns:790px 1fr;gap:66px;margin:auto 0;align-items:center}
 .chart {font-size:24px}
 .chart .legend {position:relative;font-size:20px;color:var(--muted);margin:0 0 26px 151px}
@@ -241,6 +269,12 @@ strong,.headline {font-weight:700}
 .score-values {font-size:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .score-values strong {color:var(--accent-ink)}
 .chart-scale {display:flex;justify-content:space-between;margin:8px 170px 0 156px;font-size:17px;color:var(--muted)}
+.fpa-chart .score-cell {grid-template-columns:1fr 72px}
+.fpa-chart .score-track {height:12px;background:#dfd7ce}
+.fpa-bar {display:block;height:100%;background:var(--accent-ink)}
+.fpa-chart .chart-scale {margin-right:93px}
+.failure-detail {padding-top:16px;margin-top:23px;border-top:1px solid var(--rule);font-size:22px}
+.failure-detail strong {display:block;color:var(--accent-ink);font:48px/1.05 var(--serif);margin-top:4px}
 .stat {font:400 102px/.9 var(--serif);letter-spacing:-.035em;color:var(--accent-ink)}
 .stat-label {font-size:28px;line-height:1.2;margin-top:16px}
 .stat-detail {font-size:24px;line-height:1.25;color:var(--muted);margin-top:25px}

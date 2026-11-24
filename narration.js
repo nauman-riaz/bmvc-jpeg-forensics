@@ -29,36 +29,43 @@ window.BmvcNarration = {
   "current-detectors": {
     "source": "Wong et al., ADCD-Net: Robust Document Image Forgery Localization via Adaptive DCT Feature and Hierarchical Content Disentanglement, ICCV 2025. Supplementary Figure B, first Test row, panels Image, GT, DTD, ADCD-Net. Source: https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf . Original published overlays are preserved. Red marks forged or predicted-forged pixels; blue marks pristine or predicted-pristine pixels. This selected qualitative example illustrates capability, not universal accuracy or a ranking. DTD also flags some authentic pixels.",
     "steps": [
-      "Here’s another receipt. The date and time each have an edited digit. The red regions show exactly where they are.",
-      "Both detectors pick up those tiny edits. Alongside the appearance of the text, JPEG-aware models can use the patterns that compression leaves behind. How much does the detector’s answer depend on where those blocks happen to fall?"
+      "Stay with this receipt. Look at its date and time. Someone changed one digit in each. The annotation shows how small those edits are.",
+      "Both detectors found the changed digits. DTD also flagged a few extra pixels. What information did these detectors have that we didn’t? Let’s look inside one of them."
+    ]
+  },
+  "detector-design": {
+    "source": "DTD architecture adapted from Qu et al., Towards Robust Tampered Text Detection in Document Image, CVPR 2023, Figure 4 and §4.2. The diagram groups the encoder and decoder into feature fusion and mask prediction. The receipt is the same published example from Wong et al., ICCV 2025 supplementary Figure B. ADCD-Net also models RGB and DCT features. The six detectors and their input modalities are described in the BMVC paper’s Experimental Setup.",
+    "steps": [
+      "Take DTD. One branch sees the receipt we see. The other reads its JPEG frequency coefficients, together with the table used to quantize them. These are called DCT coefficients, from the discrete cosine transform. When a changed digit looks convincing, the way it was compressed can offer another clue. All six detectors we studied were designed to use both image pixels and frequency information. That led us to ask a question about how JPEG represents this page."
     ]
   },
   "jpeg-grid": {
     "source": "BMVC manuscript JPEG Compression Model and Experimental Setup. Grid and overlays are schematic. The study evaluates six detectors that use RGB and DCT features.",
     "steps": [
-      "Imagine the JPEG grid as the boundaries between eight-by-eight blocks. The shaded region contains the pasted text. On the left, the block pattern in that patch is offset from the one around it. On the right, those boundaries line up. The text is still forged, and the mismatch that might give it away can be weaker. Can a detector still find it?"
+      "JPEG computes those coefficients in blocks of eight by eight pixels. Here is the same replacement amount in two positions relative to those blocks. On the left the boundary pattern inside the patch is offset from the surrounding page. On the right the boundaries line up. If you were the detector, which edit would you expect to be easier to find? [Pause.] Here is how we tested that prediction."
     ]
   },
   "gaf": {
     "source": "BMVC Algorithm 1 and Experimental Setup. Animation adapted from the colloquium GAF slide. The schematic uses 32 screen units per 8-pixel block. Control copy translation is (8,184) screen units; snapped translation is (32,192), preserving grid phase. The target text remains underneath the opaque moving patch until it is covered. Each Snap8 boundary expands by fewer than eight actual pixels.",
     "steps": [
-      "Let’s build the edit. Both branches select the same source and target text. We want to copy forty-eight fifty over eighty-two ninety. These selected regions are away from existing annotated forgeries. First, look at the ordinary boxes around the text.",
-      "Now reveal the JPEG grid. Each cell represents eight by eight pixels. The source and target boxes cut through these blocks at different positions. A patch copied between them can carry a grid that does not line up with its new surroundings.",
-      "For GAF, expand both boxes outward to the nearest block boundaries. [Pause while the boxes expand.] We change the patch boundaries, not the characters. The unaligned control on the left keeps its original boxes.",
-      "Now copy the patch in each branch. Watch the source grid move with the text. [Pause until both patches arrive.] On the left, the pasted grid is misaligned with the target. On the right, the block boundaries line up. We apply the same forgery operation and JPEG quality sequence to both. The principle also applies to splicing and rendered text. Let’s see what an aligned edit does to the detector’s prediction."
+      "We started with DocTamper pages that already contained an annotated edit. In a separate region we made two versions of one new edit. Both use the same source text and target text. Here we copy forty-eight fifty over eighty-two ninety.",
+      "Lay the grid over the two selected boxes. Look at where the source box starts inside a block, then where the target box starts.",
+      "For Grid-Aligned Forgery, expand the source and target boxes to the enclosing block boundaries. [Pause as the boxes expand.] The selected words stay the same. The control keeps its original boxes.",
+      "Now copy the patch in both versions. [Let both patches land.] We use the same copy operation and JPEG quality sequence in each. The intended difference is where the patch boundaries fall. How does the detector respond on a real document?"
     ]
   },
   "gaf-results": {
     "source": "BMVC Figure 1(a), att1_bag_gt_overlay.png and att1_bag_pred_overlay.png. The figure does not identify the detector. It shows distinct grid-aligned and standard edited regions within one document, not a before/after pair of the same edit. Across all six detectors, active main-table.tex TestingSet rows give paired copy–move pixel F1 decreases of 8.6–47.0 percentage points.",
     "steps": [
-      "Here is Figure 1 from our paper. Both red and blue regions are forged. Red marks grid-aligned edits; blue marks standard edits. Look at the lower red region and the blue word just beneath it.",
-      "Now reveal the prediction in green. The detector flags “one-line” but misses the aligned edit just above it. [Pause on the dashed outline.] The forged content is present, yet the detector leaves it unmarked. That is one example. To test whether this pattern extends across models, we compare matched aligned and unaligned edits throughout the dataset."
+      "We have moved from the schematic pair to one document containing both kinds of edit. This is its ground truth. Find the blue word “one-line” near the bottom and the red region immediately above it. Both were edited. Which one will the detector mark? [Pause.]",
+      "Here is its prediction in green. It finds “one-line.” The dashed box shows where the aligned edit above it went unmarked. That answers the question for one example. Does the same pattern hold across detectors?"
     ]
   },
   "gaf-comparison": {
-    "source": "Active main-table.tex TestingSet rows: paired copy–move pixel F1 for all six detectors. Hollow markers are the matched unaligned controls and filled markers are GAF. Losses range from 8.6 to 47.0 percentage points. Active tsroie-table.tex shows lower paired copy–move F1 for all six DocTamper-trained detectors on Tampered-SROIE. The control and intervention use the same source and target text, forgery operation and JPEG schedule, with Snap8 applied only in GAF.",
+    "source": "Active main-table.tex TestingSet rows: paired copy–move pixel F1 for all six detectors. Hollow markers are the matched unaligned controls and filled markers are GAF. Losses range from 8.6 to 47.0 percentage points. Active tsroie-table.tex shows lower paired copy–move F1 for all six DocTamper-trained detectors on Tampered-SROIE. The control and intervention use the same source and target text, forgery operation and JPEG schedule, with Snap8 applied only in GAF. The TestingSet CAT-Net DFR is 0.230 for unaligned copy–move and 0.570 for GAF-CM. The GAF-S and GAF-G results are discussed in the paper’s quantitative analysis.",
     "steps": [
-      "Each row is a different detector. The circle is the standard paired edit. The square is the aligned one. On DocTamper, every square moves left, with drops of eight point six to forty-seven percentage points. We see the same direction on Tampered-SROIE. We’ve seen a real edit become harder to find when its grid lines up. Now keep the edit where it is and move the grid. Where will the detector tell us to look?"
+      "Each row is one detector. Read across from the open circle, the unaligned control, to the red square, the aligned copy–move. All six lose pixel-level F1 on DocTamper, by 8.6 to 47 percentage points. All six also lose F1 on Tampered-SROIE copy–move.",
+      "Do these shifts mean real misses? Detection failure rate counts predictions with too little overlap with the annotation, averaged over several overlap thresholds. For CAT-Net it rose from 0.23 to 0.57. Returning to the other edits we showed at the start, splicing followed a similar pattern. Rendered text was generally less affected, with considerable variation across detectors. Now turn the question around. What happens if we leave an existing edit in place and move the JPEG grid?"
     ]
   },
   "prc": {
@@ -71,22 +78,23 @@ window.BmvcNarration = {
     ]
   },
   "prc-results": {
-    "source": "BMVC Figure 1(b), matched predictions on a pre-forged document. The manuscript caption leaves the detector unnamed. The semantic content and spatial layout are preserved, but decoded RGB values may differ after recompression.",
+    "source": "Figure 1(b) shows the same unnamed detector before and after PRC. Figure 4 is a separate DocTamper TestingSet example, using the image, corresponding ground truth and DTD column from the same bottom row of prc_comparison_seed_123.png. Figure 4 uses red for ground truth, blue for true positives and yellow for false positives.",
     "steps": [
-      "This is the prediction with the original grid. Look at the lines around the two green regions.",
-      "After the shift, those same lines light up. The existing edit stays in place. The model is asking the reviewer to investigate authentic text. How much does the response vary across the six models?"
+      "This is the original grid. Green shows the detector’s prediction. Keep your eye on the lines surrounding the two marked words.",
+      "Here is the same detector after the shift. Its prediction now spreads over those lines. To tell which flagged pixels are authentic, we need to compare a prediction with an annotation. The paper gives us that comparison on a second page.",
+      "On this second page there are just two small annotated regions. They appear in red in the middle panel. On the right, blue marks pixels DTD correctly localized after PRC. Yellow marks authentic pixels the detector flagged. How much of a page can those false alarms occupy across the six detectors?"
     ]
   },
   "prc-comparison": {
     "source": "Active main-table.tex TestingSet rows, original-forgery recompression control versus PRC pixel F1 for all six detectors. PRC lowers F1 for CAT-Net, DTD, DocForgeNet, FFDN and RTM; ADCD-Net increases from 80.6% to 84.5%. This is a different matched control from the GAF copy–move comparison. Active main-table.tex TestingSet PRC mean FPA ranges from 0.1% to 21.5% of full image area across the detector-level means.",
     "steps": [
-      "Five detectors lose pixel-level F1. One improves. The spread is especially visible if we measure false-positive area. Some detectors flag a very small share of the page, while the largest mean reaches twenty-one point five percent of the whole image. The two experiments reveal complementary errors. A real edit can go unmarked when its grid lines up. Authentic text can attract a false alarm when the grid shifts."
+      "For each page we count authentic pixels the detector flagged and divide by the area of the whole page. We then average across DocTamper’s test set. Two models reach 17.7 and 21.5 percent. The other four are at or below 1.1 percent. Five of the six also lose pixel F1, and one improves. The response to the fixed half-block shift varies substantially by detector. What does that mean for the reviewer we started with?"
     ]
   },
   "thank-you": {
     "source": "The opening receipt from DocTamper returns as a callback to the task. The comparison results come from the reported GAF and PRC experiments. Conclusion and limitations are discussed in the BMVC manuscript.",
     "steps": [
-      "Back to the digit we started with. If this same page comes in after a different JPEG save, the reviewer still needs us to point to the same edit. These two experiments give us a way to test whether a detector will.",
+      "At the start I asked you to find one changed digit. A reviewer needs two things from a detector. Point to that digit, and leave the genuine text alone. Across the six JPEG-aware detectors we tested, grid alignment could affect both judgments. GAF tests whether aligning an edit can hide it. PRC tests whether shifting the grid can create false alarms. We can construct both tests without querying the detector.",
       "Thank you. I’m happy to take questions."
     ]
   }

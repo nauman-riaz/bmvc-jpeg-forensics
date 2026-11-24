@@ -82,22 +82,43 @@
     return cell;
   }
 
+  function falsePositiveCell(fraction) {
+    const cell = document.createElement("div");
+    cell.className = "score-cell";
+    cell.setAttribute("role", "cell");
+    const track = document.createElement("span");
+    track.className = "score-track";
+    track.setAttribute("aria-hidden", "true");
+    const bar = document.createElement("span");
+    bar.className = "fpa-bar";
+    bar.style.width = (fraction / 0.25 * 100) + "%";
+    track.append(bar);
+    const value = document.createElement("strong");
+    value.className = "score-values";
+    value.textContent = (fraction * 100).toFixed(1) + "%";
+    cell.append(track, value);
+    return cell;
+  }
+
+  function appendScoreRow(table, model, cell) {
+    const row = document.createElement("div");
+    row.className = "score-row";
+    row.setAttribute("role", "row");
+    const name = document.createElement("span");
+    name.className = "score-model";
+    name.setAttribute("role", "rowheader");
+    name.textContent = model;
+    row.append(name, cell);
+    table.append(row);
+  }
+
   const { models, doc } = window.BmvcResults;
-  for (const [branch, controlOffset, interventionOffset] of [["gaf", 2, 3], ["prc", 0, 1]]) {
-    const scoreRows = byId(branch + "-model-scores");
-    for (const [index, model] of models.entries()) {
-      const control = doc[index * 8 + controlOffset][2] * 100;
-      const intervention = doc[index * 8 + interventionOffset][2] * 100;
-      const row = document.createElement("div");
-      row.className = "score-row";
-      row.setAttribute("role", "row");
-      const name = document.createElement("span");
-      name.className = "score-model";
-      name.setAttribute("role", "rowheader");
-      name.textContent = model;
-      row.append(name, scoreCell(control, intervention));
-      scoreRows.append(row);
-    }
+  for (const [index, model] of models.entries()) {
+    const start = index * 8;
+    const unalignedF1 = doc[start + 2][2];
+    const alignedF1 = doc[start + 3][2];
+    appendScoreRow(byId("gaf-model-scores"), model, scoreCell(unalignedF1 * 100, alignedF1 * 100));
+    appendScoreRow(byId("prc-model-scores"), model, falsePositiveCell(doc[start + 1][3]));
   }
 
   const notes = ColloquiumStepNotes.createController(slides);
