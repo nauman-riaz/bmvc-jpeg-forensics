@@ -54,9 +54,9 @@ html.audience-clean .reveal{height:100%}
   border-bottom:1px solid #648078;
 }
 .cover-conference-mark {
-  display:block;
-  padding:9px 13px;
-  background:#e3e2d8;
+  display:flex;
+  align-items:center;
+  min-height:71px;
 }
 .cover-conference-mark img {
   display:block;
@@ -97,14 +97,15 @@ html.audience-clean .reveal{height:100%}
 }
 .cover-affiliations {
   display:flex;
-  width:max-content;
   align-items:center;
   gap:31px;
-  margin-top:28px;
-  padding:9px 22px;
-  background:#e3e2d8;
+  margin-top:32px;
 }
 .cover-affiliations img { display:block; height:auto; }
+.cover-conference-mark img,
+.cover-affiliations img {
+  filter:brightness(0) invert(.75);
+}
 .cover-rptu { width:148px; }
 .cover-dfki { width:62px; }
 .cover-nust { width:79px; }
@@ -121,6 +122,8 @@ html.audience-clean .reveal{height:100%}
   width:207px;
   max-width:none;
   max-height:none;
+  /* Keep the contrast between the AnotherAI lettering and its tag. */
+  filter:grayscale(1) invert(1) brightness(.84);
 }
 #title .intro-receipt { top:195px; }
 .intro-receipt {
