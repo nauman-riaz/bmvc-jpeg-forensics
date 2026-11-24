@@ -13,7 +13,7 @@
   }
 
   function addNarration(slide, index) {
-    const { time, source, steps } = window.BmvcNarration[slide.id];
+    const { source, steps } = window.BmvcNarration[slide.id];
     if (steps.length !== fragmentGroups(slide).size + 1) {
       throw new Error("Speaker notes are missing a reveal on " + slide.id);
     }
@@ -25,7 +25,8 @@
       passage.dataset.noteStep = String(step);
       const label = document.createElement("p");
       label.className = "note-position";
-      label.textContent = "Slide " + (index + 1) + " · " + time + " · Step " + step + "/" + (steps.length - 1);
+      label.textContent = "Slide " + (index + 1) + " · " + slide.dataset.location +
+        (steps.length > 1 ? " · Step " + step + "/" + (steps.length - 1) : "");
       const body = document.createElement("p");
       body.className = "note-speech";
       body.textContent = speech;
@@ -51,9 +52,9 @@
     slide.append(folio);
   });
 
-  function scoreCell(baseline, treatment, branch) {
+  function scoreCell(baseline, treatment) {
     const cell = document.createElement("div");
-    cell.className = "score-cell " + branch;
+    cell.className = "score-cell";
     cell.setAttribute("role", "cell");
 
     const track = document.createElement("span");
@@ -94,14 +95,24 @@
       name.className = "score-model";
       name.setAttribute("role", "rowheader");
       name.textContent = model;
-      row.append(name, scoreCell(control, intervention, branch + "-score"));
+      row.append(name, scoreCell(control, intervention));
       scoreRows.append(row);
     }
   }
 
   const notes = ColloquiumStepNotes.createController(slides);
+  function normalizeLegacySlideLink() {
+    const [requestedSlide, requestedStep] = location.hash.replace(/^#\/?/, "").split("/");
+    if (requestedSlide === "prediction") {
+      history.replaceState(null, "", requestedStep === "0" ? "#/prc-results/0" : "#/prc-results/-1");
+    } else if (requestedSlide === "takeaway") {
+      history.replaceState(null, "", "#/thank-you/-1");
+    }
+  }
+  normalizeLegacySlideLink();
+  window.addEventListener("hashchange", normalizeLegacySlideLink);
   const deck = new Reveal({
-    width: 1600, height: 900, margin: 0, center: false,
+    width: 1440, height: 810, margin: 0, center: false,
     controls: false, progress: false, slideNumber: false,
     hash: true, fragmentInURL: true, history: false,
     transition: quiet ? "none" : "fade",
