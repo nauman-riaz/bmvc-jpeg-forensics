@@ -1,17 +1,17 @@
 window.BmvcNarration = {
   "title": {
     "time": "0:00–0:10",
-    "source": "BMVC manuscript, title and author list. Cover image from DocForgeNet Figure 1.",
+    "source": "BMVC manuscript, title and author list. Cover image from DocTamper (Qu et al., CVPR 2023), local export img7_compression_98.png.",
     "steps": [
       "I’m Nauman Riaz. Our paper asks how reliably document detectors find edits when the JPEG grid changes."
     ]
   },
   "motivation": {
     "time": "0:10–0:50",
-    "source": "DocForgeNet Figure 1, matching restaurant receipt and ground-truth annotation (real2.png and gt2.png).",
+    "source": "DocTamper (Qu et al., CVPR 2023), img7_compression_98.png from the local images/imgs and boxes exports. The original annotation outlines a digit in the number above the item description.",
     "steps": [
-      "A changed amount on a receipt can change what someone pays. But looking for that change is not always easy. Take this real dataset example. Where would you ask a reviewer to look? [Pause on the unmarked receipt.]",
-      "The annotation marks the total. This is the localization task: find the altered pixels so a reviewer can inspect the right place. To understand what a detector might use, let’s first look at how replacement text gets into a document."
+      "One digit on this receipt was edited. Take a few seconds to see if you can spot it. [Pause on the unmarked receipt.] Imagine having to point to the exact spot without seeing the original.",
+      "The box marks the edited nine in the number above the item description. A detector has to find the edited pixels so a reviewer knows where to look. Let’s start with three ways that replacement text can end up on a page."
     ]
   },
   "forgery-types": {
