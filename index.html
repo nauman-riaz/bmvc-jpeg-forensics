@@ -8,40 +8,50 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/reset.css">
   <link rel="stylesheet" href="vendor/reveal.css">
-  <link rel="stylesheet" href="stage.css?v=ivory-story">
+  <link rel="stylesheet" href="stage.css?v=receipt-story">
   <link rel="stylesheet" href="methods.css?v=ivory-story">
   <script src="audience-mode.js"></script>
 </head>
 <body>
 <main class="reveal" aria-label="BMVC presentation">
   <div class="slides">
-    <section id="title" data-title="Mistaking Periodicity for Manipulation" data-location="Opening">
+    <section id="title" data-title="Mistaking Periodicity for Manipulation" data-location="Opening" data-auto-animate data-auto-animate-id="opening-receipt">
       <div class="slide-body cover">
         <header class="conference">
           <div class="mark"><img src="assets/logos/bmvc-2026.png" alt="BMVC 2026"></div>
           <p class="venue">British Machine Vision Conference<small>Lancaster, UK · 23–26 November 2026</small></p>
         </header>
-        <h1 class="cover-title">Mistaking Periodicity<br>for <span class="accent">Manipulation</span></h1>
-        <p class="subtitle">JPEG-Induced Structural Bias in Document Tampering Detection</p>
-        <p class="authors"><strong>Nauman Riaz*</strong>, Ali Hussain*, Saifullah Saifullah*, Muhammad Imran Malik,<br>Stefan Agne, Andreas Dengel, Sheraz Ahmed<br><small>* Equal contribution</small></p>
-        <div class="affiliations" aria-label="Author affiliations">
-          <img src="assets/logos/rptu.svg" alt="RPTU">
-          <span class="divider" aria-hidden="true"></span>
-          <img src="assets/logos/dfki.svg" alt="DFKI">
-          <img src="assets/logos/deepreader.png" alt="DeepReader">
-          <img src="assets/logos/nust.png" alt="NUST">
+        <div class="cover-feature">
+          <div>
+            <h1 class="cover-title">Mistaking Periodicity<br>for <span class="accent">Manipulation</span></h1>
+            <p class="subtitle">JPEG-Induced Structural Bias in<br>Document Tampering Detection</p>
+            <p class="authors"><strong>Nauman Riaz*</strong>, Ali Hussain*, Saifullah Saifullah*, Muhammad Imran Malik,<br>Stefan Agne, Andreas Dengel, Sheraz Ahmed<br><small>* Equal contribution</small></p>
+            <div class="affiliations" aria-label="Author affiliations">
+              <img src="assets/logos/rptu.svg" alt="RPTU">
+              <span class="divider" aria-hidden="true"></span>
+              <img src="assets/logos/dfki.svg" alt="DFKI">
+              <img src="assets/logos/deepreader.png" alt="DeepReader">
+              <img src="assets/logos/nust.png" alt="NUST">
+            </div>
+          </div>
+          <figure>
+            <div class="receipt" data-morph="opening-receipt">
+              <img src="assets/doctamper-opening-receipt.png" alt="An excerpt of a printed receipt">
+            </div>
+            <figcaption class="caption">DocTamper receipt excerpt</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <section id="motivation" data-title="Can you spot the edit?" data-location="Motivation">
+    <section id="motivation" data-title="Can you spot the edit?" data-location="Motivation" data-auto-animate data-auto-animate-id="opening-receipt">
       <div class="slide-body hook">
         <div>
           <h2>Can you spot<br>the <span class="accent">edit?</span></h2>
           <p class="deck-sub fragment fade-in" data-fragment-index="0">Which pixels were changed?</p>
         </div>
         <figure>
-          <div class="receipt"><div class="receipt-registration">
+          <div class="receipt" data-morph="opening-receipt"><div class="receipt-registration">
             <img src="assets/doctamper-opening-receipt.png" alt="A receipt with one altered digit">
             <img class="fragment fade-in" data-fragment-index="0" src="assets/doctamper-opening-receipt-gt.png" alt="The annotation identifies the nine in the middle of the upper line">
           </div></div>
@@ -53,24 +63,50 @@
     <section id="forgery-types" data-title="Where does the replacement come from?" data-location="Forgery types">
       <div class="slide-body">
         <h2>Where does the replacement come from?</h2>
-        <div class="three types">
-          <article class="type">
-            <h3>Copy–move</h3><p class="caption">From the same page</p>
-            <div class="paper paper-slip"><div><span>Item A</span><b class="origin">48.50</b></div><div><span>Item B</span><span>34.40</span></div><div class="total"><b>Total</b><b class="changed">48.50</b></div></div>
-            <div class="source-label"><strong>Item A → Total</strong></div>
+        <div class="forgery-cases">
+          <article class="forgery-case same-source">
+            <h3>Copy–move</h3>
+            <div class="forgery-scene" role="img" aria-label="Copy 48.50 from Item A into the total on the same receipt">
+              <div class="sample-page" aria-hidden="true">
+                <p class="sample-heading">Sales receipt</p>
+                <p><span>Item A</span><b class="sample-source">48.50</b></p>
+                <p><span>Item B</span><b>34.40</b></p>
+                <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+              </div>
+              <span class="transfer-arrow same-arrow" aria-hidden="true"></span>
+            </div>
+            <p>From another field on the same page</p>
           </article>
-          <article class="type fragment fade-in" data-fragment-index="0">
-            <h3>Splicing</h3><p class="caption">From another document</p>
-            <div class="paper paper-slip"><div><span>Item A</span><span>51.30</span></div><div><span>Item B</span><span>31.60</span></div><div class="total"><b>Total</b><b class="changed">48.50</b></div></div>
-            <div class="source-label"><span class="donor">Donor receipt · <b>48.50</b></span><strong>→ Total</strong></div>
+          <article class="forgery-case fragment fade-up" data-fragment-index="0">
+            <h3>Splicing</h3>
+            <div class="forgery-scene" role="img" aria-label="Paste the 48.50 total from a separate receipt into the target receipt">
+              <div class="sample-page" aria-hidden="true">
+                <p class="sample-heading">Sales receipt</p>
+                <p><span>Item A</span><b>51.30</b></p>
+                <p><span>Item B</span><b>31.60</b></p>
+                <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+              </div>
+              <div class="alternate-source donor-page" aria-hidden="true"><span>Donor receipt</span><b class="sample-source">48.50</b></div>
+              <span class="transfer-arrow external-arrow" aria-hidden="true"></span>
+            </div>
+            <p>From a separate document</p>
           </article>
-          <article class="type fragment fade-in" data-fragment-index="1">
-            <h3>Rendered text</h3><p class="caption">From newly rendered characters</p>
-            <div class="paper paper-slip"><div><span>Item A</span><span>51.30</span></div><div><span>Item B</span><span>31.60</span></div><div class="total"><b>Total</b><b class="changed">48.50</b></div></div>
-            <div class="source-label"><span class="donor">Type <b>48.50</b></span><strong>→ Total</strong></div>
+          <article class="forgery-case fragment fade-up" data-fragment-index="1">
+            <h3>Generated text</h3>
+            <div class="forgery-scene" role="img" aria-label="Render 48.50 as a new text patch and insert it into the target receipt">
+              <div class="sample-page" aria-hidden="true">
+                <p class="sample-heading">Sales receipt</p>
+                <p><span>Item A</span><b>51.30</b></p>
+                <p><span>Item B</span><b>31.60</b></p>
+                <p class="sample-total"><span>Total</span><span class="sample-target"><del>82.90</del><b>48.50</b></span></p>
+              </div>
+              <div class="alternate-source render-tile" aria-hidden="true"><span>Text renderer</span><b class="sample-source">48.50</b></div>
+              <span class="transfer-arrow external-arrow" aria-hidden="true"></span>
+            </div>
+            <p>From a newly rendered patch</p>
           </article>
         </div>
-        <p class="source">Schematic examples · Original total 82.90</p>
+        <p class="source">Schematic examples</p>
       </div>
     </section>
 
