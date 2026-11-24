@@ -36,21 +36,21 @@ window.BmvcNarration = {
   "detector-design": {
     "source": "DTD architecture adapted from Qu et al., Towards Robust Tampered Text Detection in Document Image, CVPR 2023, Figure 4 and §4.2. The diagram groups the encoder and decoder into feature fusion and mask prediction. The receipt is the same published example from Wong et al., ICCV 2025 supplementary Figure B. ADCD-Net also models RGB and DCT features. The six detectors and their input modalities are described in the BMVC paper’s Experimental Setup.",
     "steps": [
-      "Take DTD. One branch sees the receipt we see. The other reads the JPEG frequency coefficients and the table used to quantize them. All six detectors we studied use both image pixels and frequency information. What do those coefficients describe? Let’s stay with the date on this receipt."
+      "Take DTD. One branch sees the receipt just as we do. The other reads information from the way the receipt was saved. All six detectors we studied use both kinds of information. To see what that second branch has to work with, let’s look at how JPEG stores the date on this receipt."
     ]
   },
   "jpeg-blocks": {
     "source": "BMVC manuscript, JPEG Compression Model. This is an illustrative 8 × 8 grid drawn on the displayed receipt excerpt from Wong et al., ICCV 2025 supplementary Figure B. The highlighted cell illustrates one block crossing a digit edge. The diagram does not recover the JPEG grid origin of the source file.",
     "steps": [
-      "Look at the date inside the outline. When JPEG compresses an image, it processes each eight-by-eight block separately. Let’s zoom in.",
-      "In this block, the ink meets the paper. The discrete cosine transform, or DCT, describes how brightness varies inside the block, from broad changes to fine detail. JPEG rounds those coefficients to discrete levels. Each set of values belongs to one block at one position. What happens when we paste text somewhere else?"
+      "JPEG starts by dividing the image into little squares, eight pixels across and eight pixels down. Let’s zoom in on the date and look at one of those squares. [Advance to zoom.]",
+      "Those squares form the JPEG grid. See where the dark ink meets the light paper inside the highlighted square? JPEG takes the brightness values of those 64 pixels and describes them with a set of numbers. Some describe broad changes in brightness. Others describe fine detail, like the edge of this digit. That calculation is called the discrete cosine transform, or DCT. JPEG then rounds those numbers so it can store them compactly. That rounding step is called quantization. The thing to remember is that JPEG does this separately for each square. Now imagine copying a piece of text from one part of the receipt to another."
     ]
   },
   "jpeg-grid": {
     "source": "BMVC manuscript, JPEG Compression Model and Experimental Setup. Both illustrations show the same pasted amount and use the same highlight. The offset is enlarged for legibility. Predictions are introduced with the GAF results.",
     "steps": [
-      "Here is the same replacement amount in two pastes. The patch carries a block pattern from its source. Follow the red line down from the surrounding page to the top of each patch.",
-      "On the right, it carries straight through. On the left, the boundary inside the patch picks up over here. [Point to the offset and pause.] Both amounts were pasted. Would you expect the detector to find them equally well? Here is how we tested that."
+      "Here’s our pasted amount, forty-eight fifty. It can carry traces of the JPEG blocks from where it came from. Watch the red line where the patch meets the page. [Advance to reveal the line inside each patch.]",
+      "On the left, the line reaches the patch, and the next boundary picks up over here. [Point to the offset.] On the right, it carries straight through. Both amounts were pasted. Would a detector find them equally well? [Pause.] That’s what we set out to test."
     ]
   },
   "gaf": {
