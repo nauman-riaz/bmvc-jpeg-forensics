@@ -4,14 +4,14 @@
 .appendix h2{font-size:clamp(2rem,4vw,3rem)}
 .appendix h3{font-size:1.15rem}
 .appendix p{max-width:75ch}
-.appendix a{color:var(--teal);text-underline-offset:.2em}
+.appendix a{color:var(--accent-ink);text-underline-offset:.2em}
 .appendix nav{display:flex;gap:1.2rem;flex-wrap:wrap;padding-bottom:1.4rem;border-bottom:1px solid var(--rule)}
 .appendix section{margin:2.5rem 0}
 .table-wrap{overflow:auto;border:1px solid var(--rule)}
 .appendix table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.91rem}
 .appendix th,.appendix td{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:.45rem .65rem;text-align:center;white-space:nowrap}
 .appendix thead th{background:var(--dark);color:var(--light)}
-.appendix tbody th{text-align:left;background:#e5e9df}
-.appendix tbody tr:nth-child(even){background:#eaece4}
-.appendix tbody td b{color:var(--teal)}
+.appendix tbody th{text-align:left;background:#e9e1d6}
+.appendix tbody tr:nth-child(even){background:#eee9e0}
+.appendix tbody td b{color:var(--accent-ink)}
 .appendix footer{padding-top:1.5rem;border-top:1px solid var(--rule);color:var(--muted)}

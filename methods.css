@@ -8,12 +8,12 @@
 }
 #gaf .gaf-geometry { display:block; width:864px; height:auto; overflow:visible; }
 #gaf .gaf-panel-title { font:700 28px var(--sans); fill:var(--ink); }
-#gaf .gaf-aligned-panel .gaf-panel-title { fill:var(--teal); }
+#gaf .gaf-aligned-panel .gaf-panel-title { fill:var(--accent); }
 #gaf .gaf-region-label { font:24px var(--sans); fill:var(--muted); }
 #gaf .gaf-canvas { fill:#fffdf7; stroke:var(--rule); }
 #gaf .gaf-amount { font:700 35px var(--sans); fill:var(--ink); }
 #gaf .gaf-grid { fill:url(#bmvc-gaf-grid); opacity:0; transition:opacity .35s ease; }
-#gaf .gaf-box { fill:none; stroke:#526961; stroke-width:2; stroke-dasharray:6 4; }
+#gaf .gaf-box { fill:none; stroke:var(--muted); stroke-width:2; stroke-dasharray:6 4; }
 #gaf .gaf-snap-source,
 #gaf .gaf-snap-target {
   transition:x .6s ease,y .6s ease,width .6s ease,height .6s ease,stroke .3s ease,fill .3s ease,opacity .35s ease;
@@ -21,12 +21,12 @@
 #gaf .gaf-patch-paper { fill:#fffdf7; }
 #gaf .gaf-moving-patch { transform:translate(0,0); transition:transform .9s cubic-bezier(.3,.1,.2,1); }
 #gaf .gaf-copy-arrow { fill:none; stroke:var(--muted); stroke-width:2; opacity:0; transition:opacity .3s ease; }
-#gaf .gaf-outcome { font:700 25px var(--sans); fill:var(--teal); opacity:0; transition:opacity .2s ease; }
-#gaf .gaf-offset-outcome { fill:var(--rust); }
+#gaf .gaf-outcome { font:700 25px var(--sans); fill:var(--accent); opacity:0; transition:opacity .2s ease; }
+#gaf .gaf-offset-outcome { fill:var(--muted); }
 #gaf:not([data-step="0"]) .gaf-grid { opacity:1; }
 #gaf:is([data-step="2"],[data-step="3"]) .gaf-snap-source { x:116px; y:88px; width:160px; height:96px; }
 #gaf:is([data-step="2"],[data-step="3"]) .gaf-snap-target { x:148px; y:280px; width:160px; height:96px; }
-#gaf:is([data-step="2"],[data-step="3"]) .gaf-aligned-panel .gaf-box { stroke:var(--teal); stroke-dasharray:none; }
+#gaf:is([data-step="2"],[data-step="3"]) .gaf-aligned-panel .gaf-box { stroke:var(--accent); stroke-dasharray:none; }
 /* The patch carries the source grid. Only the snapped translation is a whole number of cells. */
 #gaf[data-step="3"] .gaf-control-panel .gaf-moving-patch { transform:translate(8px,184px); }
 #gaf[data-step="3"] .gaf-aligned-panel .gaf-moving-patch { transform:translate(32px,192px); }
@@ -35,7 +35,7 @@
 #gaf .gaf-method-steps { list-style:none; margin:20px 0 0; padding:0 0 0 30px; border-left:1px solid var(--rule); }
 #gaf .gaf-method-steps li { display:flex; gap:19px; margin:0 0 30px; }
 #gaf .gaf-method-steps li:last-child { margin-bottom:0; }
-#gaf .gaf-method-steps li>span { color:var(--teal); font:32px var(--serif); }
+#gaf .gaf-method-steps li>span { color:var(--accent); font:32px var(--serif); }
 #gaf .gaf-method-steps strong { display:block; font-size:30px; }
 #gaf .gaf-method-steps p { margin-top:9px; font-size:26px; line-height:1.3; color:var(--muted); }
 #gaf .gaf-common-protocol { margin-top:24px; padding-top:21px; border-top:1px solid var(--rule); font-size:26px; }
@@ -59,7 +59,7 @@
   --document: 280px;
   position: relative;
   height: 352px;
-  background: #e5ebe2;
+  background: #ede6dc;
   outline: 1px solid var(--rule);
 }
 
@@ -79,8 +79,8 @@
   width: var(--document);
   height: var(--document);
   box-sizing: border-box;
-  outline: 1px solid #ecf4e0;
-  color: #ecf4e0ae;
+  outline: 1px solid #f3ede3;
+  color: #f3ede3ae;
   background-image: linear-gradient(to right, currentColor 2px, transparent 2px), linear-gradient(to bottom, currentColor 2px, transparent 2px);
   background-size: var(--cell) var(--cell);
   clip-path: inset(0 0 0 0);
@@ -107,7 +107,7 @@
   left: calc(var(--offset) - var(--half));
   width: calc(var(--document) + var(--half));
   height: calc(var(--document) + var(--half));
-  background-color: #e3b992;
+  background-color: #dab0a0;
   opacity: 0;
   transition: opacity .4s ease;
 }
@@ -119,13 +119,13 @@
   left: calc(var(--offset) - var(--half));
   width: calc(var(--document) + var(--half));
   height: calc(var(--document) + var(--half));
-  color: #f8cd9a;
+  color: #f1b19d;
 }
 
 #prc:is([data-step="2"], [data-step="3"]) .prc-method-treatment .prc-method-origin {
   top: calc(var(--offset) - var(--half) - 4px);
   left: calc(var(--offset) - var(--half) - 4px);
-  background: var(--rust);
+  background: var(--accent-ink);
 }
 
 #prc[data-step="3"] .prc-method-treatment .prc-method-grid { clip-path: inset(var(--half) 0 0 var(--half)); }
@@ -144,7 +144,7 @@
 #prc .prc-method-key span { width: 7px; height: 7px; background: var(--ink); transform: rotate(45deg); }
 #prc .prc-method-actions { list-style: none; margin: 43px 0 0; padding: 0; }
 #prc .prc-method-actions li { border-top: 1px solid var(--rule); padding: 16px 0 21px; font-size: 27px; line-height: 1.25; }
-#prc .prc-method-actions strong { display: block; margin-bottom: 6px; color: var(--rust); font-size: 30px; }
+#prc .prc-method-actions strong { display: block; margin-bottom: 6px; color: var(--accent-ink); font-size: 30px; }
 #prc .prc-method-actions span { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
