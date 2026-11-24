@@ -1,0 +1,7 @@
+BMVC 2026
+Official conference logo, resized for the web without changing proportions or colors.
+https://bmvc2026.bmva.org/assets/images/layout/bmvc-2026-transparent.png
+
+RPTU, DFKI, DeepReader and NUST
+Original marks reused from the Document AI colloquium deck.
+NUST source: https://nust.edu.pk/about-us/nust-brand/

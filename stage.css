@@ -46,11 +46,83 @@ html.audience-clean .reveal{height:100%}
 .reveal .fragment{transition:opacity .33s ease,transform .4s ease}
 .reveal .fragment-marker{position:absolute;width:0;height:0}
 
-.cover-copy{position:absolute;left:86px;top:78px;width:870px;z-index:1}
-.reveal .cover h1{font-size:115px;line-height:.91;margin:38px 0 37px}
-.reveal .subtitle{font-size:35px;color:#dee9df;margin:0 0 52px;line-height:1.18}
-.credit{width:795px;border-top:1px solid #69837a;padding-top:21px;font-size:23px;line-height:1.45;color:#e6eae0}
-.credit small{display:block;font-size:18px;color:#c1d1c8;margin-top:13px}
+.cover-conference {
+  display:flex;
+  align-items:center;
+  gap:25px;
+  padding-bottom:22px;
+  border-bottom:1px solid #648078;
+}
+.cover-conference-mark {
+  display:block;
+  padding:9px 13px;
+  background:#e3e2d8;
+}
+.cover-conference-mark img {
+  display:block;
+  width:171px;
+  height:auto;
+}
+.cover-conference-name { font-size:24px; font-weight:700; }
+.cover-conference-date { margin-top:6px; color:#bfd1c8; font-size:21px; }
+.cover-copy {
+  position:absolute;
+  left:86px;
+  top:206px;
+  width:860px;
+}
+.reveal .cover h1 {
+  margin:0 0 24px;
+  font-size:99px;
+  line-height:1;
+}
+.cover-subtitle {
+  color:#dee9df;
+  font-size:36px;
+  line-height:1.18;
+}
+.cover-credit {
+  margin-top:37px;
+  padding-top:19px;
+  border-top:1px solid #648078;
+  color:#e6eae0;
+  font-size:25px;
+  line-height:1.45;
+}
+.cover-credit small {
+  display:block;
+  margin-top:6px;
+  font-size:18px;
+  color:#bfd1c8;
+}
+.cover-affiliations {
+  display:flex;
+  width:max-content;
+  align-items:center;
+  gap:31px;
+  margin-top:28px;
+  padding:9px 22px;
+  background:#e3e2d8;
+}
+.cover-affiliations img { display:block; height:auto; }
+.cover-rptu { width:148px; }
+.cover-dfki { width:62px; }
+.cover-nust { width:79px; }
+.cover-deepreader {
+  overflow:hidden;
+  position:relative;
+  width:175px;
+  height:48px;
+}
+.cover-deepreader img {
+  position:absolute;
+  top:-19px;
+  left:-16px;
+  width:207px;
+  max-width:none;
+  max-height:none;
+}
+#title .intro-receipt { top:195px; }
 .intro-receipt {
   position:absolute;
   top:132px;
