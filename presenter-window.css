@@ -13,6 +13,9 @@
         #presenter-references{width:min(900px,92vw);max-height:85vh;background:#f3f0e8;color:#203c37;border:1px solid #97ab9d;padding:25px 32px;overflow:auto;font-size:16px;line-height:1.5}#presenter-references::backdrop{background:#17393688}#presenter-references h2{font-size:30px}#presenter-references ol{list-style:none;padding:0}#presenter-references li{border-top:1px solid #c8d0c4;padding:15px 0}#presenter-references a{color:#23786c}#presenter-references .reference-top{display:flex;align-items:center;justify-content:space-between}#presenter-references .reference-top h3{margin:0}#presenter-references .reference-details,#presenter-references .reference-equal{font-size:14px;color:#586d62}
         @media(max-width:850px){#presenter-toolbar{padding:12px 14px}.presenter-title{max-width:350px}.presenter-actions{gap:7px}#presenter-toolbar button,#presenter-toolbar select{padding:7px;font-size:12px}body.colloquium-presenter #speaker-controls{top:150px;height:calc(100% - 150px)}body.colloquium-presenter #current-slide{top:160px}.speaker-controls-notes .note-speech{font-size:21px!important}}
 
+.speaker-controls-notes ul.note-speech {padding-inline-start:1.2em;list-style:disc}
+.speaker-controls-notes ul.note-speech li + li {margin-top:.45em}
+
 /* Follow the toolbar when controls wrap on a smaller presenter screen. */
 body.colloquium-presenter #speaker-controls{top:var(--presenter-top,132px)!important;height:calc(100% - var(--presenter-top,132px))!important}
 body.colloquium-presenter #current-slide{top:var(--current-top,140px)!important;height:var(--preview-height,32%)!important}

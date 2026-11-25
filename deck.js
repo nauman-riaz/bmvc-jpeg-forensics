@@ -25,23 +25,27 @@
     const notes = document.createElement("aside");
     notes.className = "notes";
     notes.hidden = true;
-    steps.forEach((speech, step) => {
+    steps.forEach((points, step) => {
       const passage = document.createElement("div");
       passage.dataset.noteStep = String(step);
       const label = document.createElement("p");
       label.className = "note-position";
       label.textContent = "Slide " + (index + 1) + " · " + slide.dataset.location +
         (steps.length > 1 ? " · Step " + step + "/" + (steps.length - 1) : "");
-      const body = document.createElement("p");
-      body.className = "note-speech";
-      body.textContent = speech;
+      const list = document.createElement("ul");
+      list.className = "note-speech";
+      for (const point of points) {
+        const item = document.createElement("li");
+        item.textContent = point;
+        list.append(item);
+      }
       const references = document.createElement("details");
       const summary = document.createElement("summary");
       summary.textContent = "Source and figure context";
       const description = document.createElement("p");
       description.textContent = source;
       references.append(summary, description);
-      passage.append(label, body, references);
+      passage.append(label, list, references);
       notes.append(passage);
     });
     slide.append(notes);
