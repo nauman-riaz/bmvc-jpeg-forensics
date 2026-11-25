@@ -61,7 +61,7 @@
 
     <section id="forgery-types" data-title="Where does the replacement come from?" data-location="Forgery types">
       <div class="slide-body">
-        <h2>Where does the replacement come from?</h2>
+        <h2>Where does the <em class="accent">replacement</em> come from?</h2>
         <div class="forgery-cases">
           <article class="forgery-case same-source">
             <h3>Copy–move</h3>
@@ -111,7 +111,7 @@
 
     <section id="jpeg-scope" data-title="Why JPEG document images?" data-location="Why JPEG?" data-auto-animate="true" data-auto-animate-id="detector-receipt">
       <div class="slide-body">
-        <h2>Why JPEG document images?</h2>
+        <h2>Why <em class="accent">JPEG</em> document images?</h2>
         <div class="scope-layout">
           <figure><img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="A receipt in the JPEG document-image benchmark"></figure>
           <dl class="scope-path">
@@ -126,7 +126,7 @@
 
     <section id="current-detectors" data-title="Detectors can localize subtle edits" data-location="Existing detection" data-auto-animate="true" data-auto-animate-id="detector-receipt">
       <div class="slide-body">
-        <h2>Detectors can localize subtle edits</h2>
+        <h2>Detectors can localize <em class="accent">subtle edits</em></h2>
         <p class="deck-sub">Two changed digits in a receipt’s date and time</p>
         <div class="detector-evidence">
           <figure class="detector-input-receipt">
@@ -158,7 +158,7 @@
 
     <section id="detector-design" data-title="What else can the detector see?" data-location="Detector design" data-auto-animate data-auto-animate-id="detector-receipt">
       <div class="slide-body">
-        <h2>What else can the detector see?</h2>
+        <h2><em class="accent">What else</em> can the detector see?</h2>
         <div class="architecture-layout">
           <figure>
             <img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="The receipt with the two changed digits">
@@ -177,7 +177,7 @@
 
     <section id="jpeg-blocks" data-title="Where does the JPEG grid come from?" data-location="JPEG compression" data-auto-animate data-auto-animate-id="detector-receipt">
       <div class="slide-body">
-        <h2>Where does the JPEG grid come from?</h2>
+        <h2>Where does the <em class="accent">JPEG grid</em> come from?</h2>
         <div class="jpeg-block-layout">
           <svg class="receipt-detail" data-morph="detector-receipt" viewBox="0 0 497 495" role="img" aria-label="The same receipt. The view zooms into the date and highlights one eight-by-eight block at the edge of a digit.">
             <defs>
@@ -210,7 +210,7 @@
 
     <section id="jpeg-grid" data-title="Would the detector find both edits?" data-location="JPEG block boundaries">
       <div class="slide-body">
-        <h2>Would the detector find both edits?</h2>
+        <h2>Would the detector find <em class="accent">both edits?</em></h2>
         <p class="deck-sub">Follow the red line to the edge of the pasted amount.</p>
         <div class="grid-pair">
           <figure>
@@ -235,7 +235,7 @@
 
     <section id="gaf" data-title="Grid-Aligned Forgery" data-location="GAF method">
       <div class="slide-body">
-        <h2>Grid-Aligned Forgery</h2>
+        <h2><em class="accent">Grid-Aligned</em> Forgery</h2>
         <p class="deck-sub">How we made a matched pair of copy–move edits</p>
             <div class="gaf-method-layout">
               <svg class="gaf-geometry" viewBox="0 0 900 430" role="img" aria-labelledby="gaf-diagram-title gaf-diagram-description">
@@ -302,7 +302,7 @@
 
     <section id="gaf-results" data-title="The aligned edit goes unmarked" data-location="GAF evidence">
       <div class="slide-body">
-        <h2>The aligned edit goes unmarked</h2>
+        <h2>The aligned edit goes <em class="accent">unmarked</em></h2>
         <p class="deck-sub">One document contains both aligned and standard edits.</p>
         <div class="pair evidence">
           <figure><figcaption class="caption">Ground truth</figcaption><div class="plate"><img src="assets/gaf-regions.png" alt="Paper figure with aligned edits in red and standard edits in blue"></div></figure>
@@ -315,7 +315,7 @@
 
     <section id="gaf-comparison" data-title="All six detectors lose F1 on aligned copy–move" data-location="GAF results across models">
       <div class="slide-body">
-        <h2>All six detectors lose F1 on aligned copy–move</h2>
+        <h2><em class="accent">All six</em> detectors lose F1 on aligned copy–move</h2>
         <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
         <div class="chart-wrap">
           <div class="chart" role="table" aria-label="Paired unaligned edit and aligned edit pixel F1">
@@ -336,7 +336,7 @@
 
     <section id="prc" data-title="Same edit, shifted JPEG grid" data-location="PRC method">
       <div class="slide-body">
-        <h2>Same edit, shifted JPEG grid</h2>
+        <h2>Same edit, <em class="accent">shifted JPEG grid</em></h2>
         <p class="deck-sub">Pad–Recompress–Crop</p>
             <div class="prc-method-layout">
               <div class="prc-method-comparison">
@@ -374,7 +374,7 @@
 
     <section id="prc-results" data-title="A grid shift can trigger false alarms" data-location="PRC evidence">
       <div class="slide-body">
-        <h2>A grid shift can trigger false alarms</h2>
+        <h2>A grid shift can trigger <em class="accent">false alarms</em></h2>
         <div class="prc-evidence-stages">
           <div class="pair evidence prc-predictions">
             <figure><figcaption class="caption">Original grid</figcaption><div class="plate"><img src="assets/prc-before.png" alt="Prediction with original grid marks two words in green"></div></figure>
@@ -398,7 +398,7 @@
 
     <section id="prc-comparison" data-title="Five of six detectors lose F1 after the shift" data-location="PRC results across models">
       <div class="slide-body">
-        <h2>Five of six detectors lose F1 after the shift</h2>
+        <h2><em class="accent">Five of six</em> detectors lose F1 after the shift</h2>
         <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
         <div class="chart-wrap">
           <div class="chart" role="table" aria-label="Paired pixel-level F1 with the original JPEG grid and after PRC">
@@ -420,7 +420,7 @@
     <section id="conclusion" data-title="JPEG alignment can change what gets flagged" data-location="Conclusion">
       <div class="slide-body conclusion">
         <p class="conclusion-label">Conclusion</p>
-        <h2>JPEG alignment can change what gets flagged</h2>
+        <h2>JPEG alignment can change <em class="accent">what gets flagged</em></h2>
         <div class="conclusion-evidence">
           <figure>
             <h3>Align the edit <span>GAF</span></h3>
