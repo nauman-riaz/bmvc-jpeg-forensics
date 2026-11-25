@@ -276,13 +276,14 @@ strong,.headline {font-weight:700}
 .mask-hit {background:blue}
 .mask-false {background:yellow}
 .chart-wrap {display:grid;grid-template-columns:790px 1fr;gap:66px;margin:auto 0;align-items:center}
-.chart {font-size:24px}
-.chart .legend {position:relative;font-size:20px;color:var(--muted);margin:0 0 26px 151px}
+.chart {--model-width:205px;--column-gap:13px;font-size:24px}
+.chart .legend {position:relative;font-size:20px;color:var(--muted);margin:0 0 18px calc(var(--model-width) + var(--column-gap))}
 .legend strong {color:var(--accent-ink);margin-left:16px}
 .baseline-marker,.treatment-marker {display:inline-block;width:12px;height:12px;border:2px solid var(--muted);border-radius:50%;margin-right:3px}
 .treatment-marker {background:var(--accent-ink);border-color:var(--accent-ink);border-radius:1px}
-.score-row {display:grid;grid-template-columns:143px 1fr;gap:13px;align-items:center;margin-bottom:17px}
+.score-row {display:grid;grid-template-columns:var(--model-width) 1fr;gap:var(--column-gap);align-items:center;margin-bottom:14px}
 .score-model {font-weight:700}
+.score-venue {display:block;font-size:18px;line-height:1.2;color:var(--muted);font-weight:400}
 .score-cell {display:grid;grid-template-columns:1fr 149px;gap:21px;align-items:center}
 .score-track {height:14px;position:relative;background:linear-gradient(var(--rule),var(--rule)) center/100% 1px no-repeat}
 .score-point {display:block;position:absolute;top:50%;transform:translate(-50%,-50%);width:15px;height:15px;border:2px solid var(--muted);border-radius:50%;background:var(--paper)}
@@ -290,7 +291,7 @@ strong,.headline {font-weight:700}
 .score-distance {height:3px;top:50%;transform:translateY(-50%);position:absolute;background:#a59489}
 .score-values {font-size:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .score-values strong {color:var(--accent-ink)}
-.chart-scale {display:flex;justify-content:space-between;margin:8px 170px 0 156px;font-size:17px;color:var(--muted)}
+.chart-scale {display:flex;justify-content:space-between;margin:8px 170px 0 calc(var(--model-width) + var(--column-gap));font-size:17px;color:var(--muted)}
 .failure-detail {padding-top:16px;margin-top:23px;border-top:1px solid var(--rule);font-size:22px}
 .failure-detail strong {display:block;color:var(--accent-ink);font:48px/1.05 var(--serif);margin-top:4px}
 .stat {font:400 102px/.9 var(--serif);letter-spacing:-.035em;color:var(--accent-ink)}

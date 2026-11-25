@@ -59,7 +59,7 @@ window.BmvcNarration = {
         "Receipt + ground truth → two edited 8s, one in the date and one in the time."
       ],
       [
-        "DTD and ADCD-Net → both found the two 8s.",
+        "DTD (CVPR 2023) and ADCD-Net (ICCV 2025) → both found the two 8s.",
         "Pretty good on this receipt, right? Which cues could they be using?"
       ]
     ]

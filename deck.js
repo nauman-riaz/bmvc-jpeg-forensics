@@ -17,6 +17,8 @@
     return new Set([...fragments].map(fragment => fragment.dataset.fragmentIndex));
   }
 
+  const { models, doc, publications } = window.BmvcResults;
+
   function addNarration(slide, index) {
     const { source, steps } = window.BmvcNarration[slide.id];
     if (steps.length !== fragmentGroups(slide).size + 1) {
@@ -46,6 +48,24 @@
       description.textContent = source;
       references.append(summary, description);
       passage.append(label, list, references);
+      if (slide.hasAttribute("data-detector-publications")) {
+        const details = document.createElement("details");
+        const heading = document.createElement("summary");
+        heading.textContent = "Detector publications";
+        const papers = document.createElement("ul");
+        for (const model of models) {
+          const paper = document.createElement("a");
+          paper.href = publications[model].url;
+          paper.target = "_blank";
+          paper.rel = "noopener";
+          paper.textContent = model + " · " + publications[model].venue;
+          const item = document.createElement("li");
+          item.append(paper);
+          papers.append(item);
+        }
+        details.append(heading, papers);
+        passage.append(details);
+      }
       notes.append(passage);
     });
     slide.append(notes);
@@ -98,12 +118,14 @@
     const name = document.createElement("span");
     name.className = "score-model";
     name.setAttribute("role", "rowheader");
-    name.textContent = model;
+    const venue = document.createElement("small");
+    venue.className = "score-venue";
+    venue.textContent = publications[model].venue;
+    name.append(model, " ", venue);
     row.append(name, cell);
     table.append(row);
   }
 
-  const { models, doc } = window.BmvcResults;
   for (const [index, model] of models.entries()) {
     const start = index * 8;
     const originalF1 = doc[start][2];

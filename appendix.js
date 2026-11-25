@@ -27,7 +27,7 @@
     }
   });
 
-  const { models, doc, ts, wfe } = window.BmvcResults;
+  const { models, doc, ts, wfe, publications } = window.BmvcResults;
   const pct = value => value === null ? "—" : (value * 100).toFixed(1);
   const forgery = ["Copy–move", "Generative", "Splicing"];
   const splits = ["TestingSet", "FCD", "SCD"];
@@ -59,6 +59,11 @@
       const title = document.createElement("th");
       title.scope = "row";
       title.textContent = name;
+      if (publications[name]) {
+        const venue = document.createElement("small");
+        venue.textContent = publications[name].venue;
+        title.append(document.createElement("br"), venue);
+      }
       row.append(title);
       for (const value of values) {
         const cell = row.insertCell();
