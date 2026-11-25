@@ -292,8 +292,6 @@ strong,.headline {font-weight:700}
 .score-values {font-size:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .score-values strong {color:var(--accent-ink)}
 .chart-scale {display:flex;justify-content:space-between;margin:8px 170px 0 calc(var(--model-width) + var(--column-gap));font-size:17px;color:var(--muted)}
-.failure-detail {padding-top:16px;margin-top:23px;border-top:1px solid var(--rule);font-size:22px}
-.failure-detail strong {display:block;color:var(--accent-ink);font:48px/1.05 var(--serif);margin-top:4px}
 .stat {font:400 102px/.9 var(--serif);letter-spacing:-.035em;color:var(--accent-ink)}
 .stat-label {font-size:28px;line-height:1.2;margin-top:16px}
 .stat-detail {font-size:24px;line-height:1.25;color:var(--muted);margin-top:25px}

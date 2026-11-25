@@ -134,15 +134,12 @@ window.BmvcNarration = {
     ]
   },
   "gaf-comparison": {
-    "source": "Active main-table.tex TestingSet rows: paired copy–move pixel F1 for all six detectors. Hollow markers are the matched unaligned controls and filled markers are GAF. Losses range from 8.6 to 47.0 percentage points. Active tsroie-table.tex shows lower paired copy–move F1 for all six DocTamper-trained detectors on Tampered-SROIE. The control and intervention use the same source and target text, forgery operation and JPEG schedule, with Snap8 applied only in GAF. The TestingSet CAT-Net DFR is 0.230 for unaligned copy–move and 0.570 for GAF-CM. The GAF-S and GAF-G results are discussed in the paper’s quantitative analysis.",
+    "source": "Active main-table.tex TestingSet rows: paired copy–move pixel F1 for all six detectors. Hollow markers are the matched unaligned controls and filled markers are GAF. Losses range from 8.6 to 47.0 percentage points. Active tsroie-table.tex shows lower paired copy–move F1 for all six DocTamper-trained detectors on Tampered-SROIE. The control and intervention use the same source and target text, forgery operation and JPEG schedule, with Snap8 applied only in GAF. The GAF-S and GAF-G results are discussed in the paper’s quantitative analysis.",
     "steps": [
       [
         "DocTamper copy–move → circle = unaligned, square = aligned.",
-        "All six lose pixel-level F1 → down 8.6–47 percentage points."
-      ],
-      [
-        "CAT-Net → detection failure rate rises from 0.23 to 0.57.",
-        "What if we keep the edit in place and shift the grid?"
+        "All six lose pixel-level F1 → down 8.6–47 percentage points.",
+        "We aligned the edit to the grid. What if we leave the edit alone and shift the grid instead?"
       ]
     ]
   },
@@ -182,14 +179,11 @@ window.BmvcNarration = {
     ]
   },
   "prc-comparison": {
-    "source": "BMVC paper, Table 1, DocTamper TestingSet. The DocTamper Original control and PRC use matching recompression schedules on the same pre-forged pages. Pixel F1 declines for five detectors by 7.8 to 67.9 percentage points. ADCD-Net gains 3.9 points. DTD’s PRC false-positive area is 0.177, calculated per image using the full image area and averaged across the test set.",
+    "source": "BMVC paper, Table 1, DocTamper TestingSet. The DocTamper Original control and PRC use matching recompression schedules on the same pre-forged pages. Pixel F1 declines for five detectors by 7.8 to 67.9 percentage points. ADCD-Net gains 3.9 points.",
     "steps": [
       [
         "After the shift → five of six lose 7.8–67.9 F1 percentage points.",
         "One exception → ADCD-Net gains 3.9 points."
-      ],
-      [
-        "Recall DTD’s yellow overlay → false alarms cover 17.7% of the whole page on average."
       ]
     ]
   },
