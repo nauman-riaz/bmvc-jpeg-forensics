@@ -107,9 +107,9 @@ window.BmvcNarration = {
     ]
   },
   "thank-you": {
-    "source": "The receipt with two changed digits comes from the published example on slide 5. The missed edits and false alarms come from our GAF and PRC experiments.",
+    "source": "The opening receipt shows one changed digit. The example of a detector circling it is hypothetical. PRC tests how shifting the JPEG grid affects predictions on the same edited page.",
     "steps": [
-      "We started by asking which clue helped the detector find those two digits. Our experiments showed how much the JPEG grid can matter. When an edit lined up with the grid, a detector could miss it. When we shifted the grid, a detector could flag words nobody had changed. Thank you. I’d be happy to take questions."
+      "At the start, I asked you to spot a changed digit. Now imagine a detector had circled it for you. You’d know where to look. But what made it point there? In our experiments, the text could stay exactly the same and moving the JPEG grid could change the answer. Thank you."
     ]
   }
 };
