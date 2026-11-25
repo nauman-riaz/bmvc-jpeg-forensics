@@ -194,22 +194,19 @@ window.BmvcNarration = {
     ]
   },
   "conclusion": {
-    "source": "BMVC paper, Figure 1(a–b), Table 1, Conclusions and Limitations. The left image is a crop of the GAF prediction with the missed aligned edit outlined. The right image is a crop of the PRC prediction on the shifted grid. False alarms are quantified using the annotated test pages. Both probes construct their test inputs without querying the detector. The evaluation covers six JPEG-aware RGB+DCT models.",
+    "source": "BMVC paper, Figure 1(a–b), Table 1, Conclusions and Limitations. The left image is a crop of the GAF prediction with the missed aligned edit outlined. The right image is a crop of the PRC prediction on the shifted grid. False alarms are quantified using the annotated test pages. Both probes construct their test inputs without querying the detector. The evaluation covers six JPEG-aware RGB+DCT models. The opening receipt shows one changed digit. The example of a detector circling it is hypothetical.",
     "steps": [
       [
         "GAF → align the edit, and a detector can miss a forged word.",
         "PRC → shift the grid, and it can flag genuine words.",
-        "Both tests use matched pages and need no detector queries."
-      ]
-    ]
-  },
-  "thank-you": {
-    "source": "The opening receipt shows one changed digit. The example of a detector circling it is hypothetical. PRC tests how shifting the JPEG grid affects predictions on the same edited page.",
-    "steps": [
-      [
+        "Both tests use matched pages and need no detector queries.",
         "Back to the receipt → imagine a detector circled the 9. What made it point there?",
         "Same words, different grid, different prediction. Thank you."
       ]
     ]
+  },
+  "thank-you": {
+    "source": "Speaker contact details.",
+    "steps": [[]]
   }
 };
