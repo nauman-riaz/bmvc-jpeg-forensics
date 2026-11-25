@@ -6,12 +6,12 @@ Nauman Riaz · BMVC 2026 conference presentation
 
 [Open the presentation](https://nauman-riaz.github.io/bmvc-jpeg-forensics/)
 
-The 15-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
+The 16-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
 
 - Arrow keys or Space advance through slides and reveals.
 - **T** shows or hides the rehearsal toolbar.
 - **S** opens the presenter window with narration and a timer.
-- **F** enters fullscreen; **O** opens the overview; **End** opens the closing slide.
+- **F** enters fullscreen; **O** opens the overview; **C** or **End** returns to the closing slide.
 
 The speaker notes are public, as are the slides. Share only the audience window during the talk.
 

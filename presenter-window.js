@@ -53,8 +53,8 @@
   $('#presenter-focus').addEventListener('click',event=>{const on=document.body.classList.toggle('presenter-focus-notes');event.target.textContent=on?'Show previews':'Focus notes';});
   $('#presenter-reference-button').addEventListener('click',()=>$('#presenter-references').showModal());
   document.addEventListener('keydown',event=>{
-    if(event.target.closest('input,textarea,select,[contenteditable="true"]')||document.querySelector('dialog[open]')||event.ctrlKey||event.metaKey||event.altKey)return;
-    const action={ArrowRight:'next',ArrowDown:'next',' ':'next',PageDown:'next',ArrowLeft:'previous',ArrowUp:'previous',PageUp:'previous',m:'map',M:'map',End:'closing',t:'mode',T:'mode',s:'noop',S:'noop'}[event.key];
+    if(event.target.closest('input,textarea,select')||event.target.isContentEditable||document.querySelector('dialog[open]')||event.ctrlKey||event.metaKey||event.altKey)return;
+    const action={ArrowRight:'next',ArrowDown:'next',' ':'next',PageDown:'next',ArrowLeft:'previous',ArrowUp:'previous',PageUp:'previous',m:'map',M:'map',c:'closing',C:'closing',End:'closing',t:'mode',T:'mode',s:'noop',S:'noop'}[event.key];
     if(action){event.preventDefault();send(action);}
   });
   function clock(){

@@ -6,6 +6,12 @@
   const quiet = reducedMotion || receiver;
   document.documentElement.classList.toggle("presenter-receiver", receiver);
   const progress = document.querySelector(".reading-progress span");
+  const discussionReturn = document.createElement("button");
+  discussionReturn.className = "discussion-return";
+  discussionReturn.type = "button";
+  discussionReturn.textContent = "Back to Q&A · C";
+  discussionReturn.setAttribute("aria-keyshortcuts", "c End");
+  discussionReturn.addEventListener("click", goToClosing);
 
   function fragmentGroups(slide, visibleOnly = false) {
     const fragments = slide.querySelectorAll(visibleOnly ? ".fragment.visible" : ".fragment");
@@ -82,24 +88,6 @@
     return cell;
   }
 
-  function falsePositiveCell(fraction) {
-    const cell = document.createElement("div");
-    cell.className = "score-cell";
-    cell.setAttribute("role", "cell");
-    const track = document.createElement("span");
-    track.className = "score-track";
-    track.setAttribute("aria-hidden", "true");
-    const bar = document.createElement("span");
-    bar.className = "fpa-bar";
-    bar.style.width = (fraction / 0.25 * 100) + "%";
-    track.append(bar);
-    const value = document.createElement("strong");
-    value.className = "score-values";
-    value.textContent = (fraction * 100).toFixed(1) + "%";
-    cell.append(track, value);
-    return cell;
-  }
-
   function appendScoreRow(table, model, cell) {
     const row = document.createElement("div");
     row.className = "score-row";
@@ -115,10 +103,12 @@
   const { models, doc } = window.BmvcResults;
   for (const [index, model] of models.entries()) {
     const start = index * 8;
+    const originalF1 = doc[start][2];
+    const shiftedF1 = doc[start + 1][2];
     const unalignedF1 = doc[start + 2][2];
     const alignedF1 = doc[start + 3][2];
     appendScoreRow(byId("gaf-model-scores"), model, scoreCell(unalignedF1 * 100, alignedF1 * 100));
-    appendScoreRow(byId("prc-model-scores"), model, falsePositiveCell(doc[start + 1][3]));
+    appendScoreRow(byId("prc-model-scores"), model, scoreCell(originalF1 * 100, shiftedF1 * 100));
   }
 
   const notes = ColloquiumStepNotes.createController(slides);
@@ -152,7 +142,17 @@
         return to ? [{ from, to, options: { measure: element => element.getBoundingClientRect() } }] : [];
       }),
     autoSlide: 0, showNotes: false, scrollActivationWidth: false,
-    keyboard: receiver ? false : { 35: goToClosing, 79: () => deck.toggleOverview(), 83: openPresenter },
+    keyboardCondition: event => {
+      const editing = event.target?.closest?.("input, textarea, select") || event.target?.isContentEditable;
+      const modifiedClosingKey = [35, 67].includes(event.keyCode) && (event.altKey || event.ctrlKey || event.metaKey);
+      return !editing && !document.querySelector("dialog[open]") && !modifiedClosingKey;
+    },
+    keyboard: receiver ? false : {
+      35: goToClosing,
+      67: () => deck.isOverlayOpen() ? deck.closeOverlay() : goToClosing(),
+      79: () => deck.toggleOverview(),
+      83: openPresenter,
+    },
   });
   ColloquiumAudience.bind(deck);
 
@@ -181,6 +181,7 @@
   function synchronize() {
     const slide = deck.getCurrentSlide();
     if (!slide) return;
+    if (discussionReturn.parentElement && discussionReturn.parentElement !== slide) discussionReturn.remove();
     const index = deck.getIndices().h;
     const count = slides.length;
     const steps = fragmentGroups(slide).size;
@@ -218,8 +219,10 @@
   byId("closing-button").addEventListener("click", goToClosing);
   for (const link of document.querySelectorAll("[data-go]")) {
     link.addEventListener("click", event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       goTo(link.dataset.go, true);
+      if (link.closest("#thank-you") && !receiver) byId(link.dataset.go).append(discussionReturn);
     });
   }
 

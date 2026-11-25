@@ -1,4 +1,36 @@
 (() => {
+  const closingLink = document.getElementById("appendix-closing");
+
+  function originatingClosingButton() {
+    const owner = window.opener;
+    if (!owner || owner.closed) return null;
+    // A tab that opened the appendix may since have navigated to another site.
+    try {
+      if (new URL(".", owner.location.href).href !== new URL(".", location.href).href) return null;
+      return owner.document.getElementById("closing-button") ||
+        (owner.opener && !owner.opener.closed ? owner.document.getElementById("presenter-closing") : null);
+    } catch {
+      return null;
+    }
+  }
+
+  closingLink.addEventListener("click", event => {
+    if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    const button = originatingClosingButton();
+    if (!button) return; // Opening the appendix directly uses the ordinary link.
+    event.preventDefault();
+    button.ownerDocument.querySelector("dialog[open]")?.close();
+    button.click();
+    window.opener.focus();
+    window.close();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key.toLowerCase() !== "c" || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.target.closest("input, textarea, select") || event.target.isContentEditable) return;
+    event.preventDefault();
+    closingLink.click();
+  });
+
   const { models, doc, ts, wfe } = window.BmvcResults;
   const pct = value => value === null ? "—" : (value * 100).toFixed(1);
   const forgery = ["Copy–move", "Generative", "Splicing"];

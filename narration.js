@@ -90,20 +90,27 @@ window.BmvcNarration = {
     "steps": [
       "This is the original grid. Green shows the detector’s prediction. Keep your eye on the lines surrounding the two marked words.",
       "Here is the same detector after the shift. Its prediction now spreads over those lines. To tell which flagged pixels are authentic, we need to compare a prediction with an annotation. The paper gives us that comparison on a second page.",
-      "On this second page there are just two small annotated regions. They appear in red in the middle panel. On the right, blue marks pixels DTD correctly localized after PRC. Yellow marks authentic pixels the detector flagged. How much of a page can those false alarms occupy across the six detectors?"
+      "On this second page there are just two small annotated regions. They appear in red in the middle panel. On the right, blue marks pixels DTD correctly localized after PRC. Yellow marks authentic pixels the detector flagged. That’s one detector on one page. How well do the six detectors localize edits after we shift the grid?"
     ]
   },
   "prc-comparison": {
-    "source": "Active main-table.tex TestingSet rows, original-forgery recompression control versus PRC pixel F1 for all six detectors. PRC lowers F1 for CAT-Net, DTD, DocForgeNet, FFDN and RTM; ADCD-Net increases from 80.6% to 84.5%. This is a different matched control from the GAF copy–move comparison. Active main-table.tex TestingSet PRC mean FPA ranges from 0.1% to 21.5% of full image area across the detector-level means.",
+    "source": "BMVC paper, Table 1, DocTamper TestingSet. The DocTamper Original control and PRC use matching recompression schedules on the same pre-forged pages. Pixel F1 declines for five detectors by 7.8 to 67.9 percentage points. ADCD-Net gains 3.9 points. DTD’s PRC false-positive area is 0.177, calculated per image using the full image area and averaged across the test set.",
     "steps": [
-      "For each page we count authentic pixels the detector flagged and divide by the area of the whole page. We then average across DocTamper’s test set. Two models reach 17.7 and 21.5 percent. The other four are at or below 1.1 percent. Five of the six also lose pixel F1, and one improves. The response to the fixed half-block shift varies substantially by detector. What does that mean for the reviewer we started with?"
+      "Read this the same way as the GAF chart. Each circle is a detector’s pixel F1 on the original JPEG grid. The square is its score after we shift the grid, keeping the edit and the recompression schedule the same. Five squares move left. The losses range from about eight to sixty-eight percentage points. ADCD-Net is the exception. Its score goes up by about four points.",
+      "Remember the yellow false alarms on the previous page? That was DTD. Across the test set, authentic pixels it flagged after the shift occupied 17.7 percent of the whole page on average. That helps explain the drop you see on its row. What do these two experiments tell us about trusting a detector’s mask?"
+    ]
+  },
+  "conclusion": {
+    "source": "BMVC paper, Figure 1(a–b), Table 1, Conclusions and Limitations. The left image is a crop of the GAF prediction with the missed aligned edit outlined. The right image is a crop of the PRC prediction on the shifted grid. False alarms are quantified using the annotated test pages. Both probes construct their test inputs without querying the detector. The evaluation covers six JPEG-aware RGB+DCT models.",
+    "steps": [
+      "Together, the two experiments tell us that where the JPEG grid falls can change what gets flagged. On the left, an aligned forgery goes unmarked. On the right, moving the grid makes the detector flag genuine text. The size of the effect varies across the six detectors we tested. GAF and PRC give us a way to check for both errors on matched documents, without querying a model to construct the tests. Let me leave you with the receipt we started with."
     ]
   },
   "thank-you": {
-    "source": "The opening receipt from DocTamper returns as a callback to the task. The comparison results come from the reported GAF and PRC experiments. Conclusion and limitations are discussed in the BMVC manuscript.",
+    "source": "The opening DocTamper receipt and its original annotation, img7_compression_98.png. This is the audience’s opening example. The green outline is its ground truth.",
     "steps": [
-      "At the start I asked you to find one changed digit. A reviewer needs two things from a detector. Point to that digit, and leave the genuine text alone. Across the six JPEG-aware detectors we tested, grid alignment could affect both judgments. GAF tests whether aligning an edit can hide it. PRC tests whether shifting the grid can create false alarms. We can construct both tests without querying the detector.",
-      "Thank you. I’m happy to take questions."
+      "Remember the number at the top? At the start I asked which digit had changed. Imagine the reviewer receives this receipt again tomorrow, saved with a different JPEG grid. Which digit should they investigate? [Advance to its annotation.]",
+      "It’s still the nine. That’s the answer a reviewer needs, however this receipt was saved. [Pause on the digit.] Thank you. I’d be glad to take your questions."
     ]
   }
 };

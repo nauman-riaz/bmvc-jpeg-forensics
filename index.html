@@ -8,7 +8,7 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/reset.css">
   <link rel="stylesheet" href="vendor/reveal.css">
-  <link rel="stylesheet" href="stage.css?v=jpeg-refresher">
+  <link rel="stylesheet" href="stage.css?v=conference-closing">
   <link rel="stylesheet" href="methods.css?v=forensic-red">
   <script src="audience-mode.js"></script>
 </head>
@@ -380,42 +380,88 @@
       </div>
     </section>
 
-    <section id="prc-comparison" data-title="How much of the page is falsely flagged?" data-location="PRC results across models">
+    <section id="prc-comparison" data-title="Five of six detectors lose F1 after the shift" data-location="PRC results across models">
       <div class="slide-body">
-        <h2>How much of the page is falsely flagged?</h2>
-        <p class="deck-sub">Mean false-positive area after PRC · DocTamper TestingSet</p>
+        <h2>Five of six detectors lose F1 after the shift</h2>
+        <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
         <div class="chart-wrap">
-          <div class="chart fpa-chart" role="table" aria-label="Mean false-positive area after PRC by detector">
-            <div class="legend" role="row"><span class="visually-hidden" role="columnheader">Detector</span><span role="columnheader">Falsely flagged pixels as a share of the whole page</span></div>
+          <div class="chart" role="table" aria-label="Paired pixel-level F1 with the original JPEG grid and after PRC">
+            <div class="legend" role="row">
+              <span role="columnheader" class="visually-hidden">Detector</span>
+              <span role="columnheader"><span class="baseline-marker" aria-hidden="true"></span> Original grid
+                <strong><span class="treatment-marker" aria-hidden="true"></span> Shifted grid (PRC)</strong></span>
+            </div>
             <div id="prc-model-scores" role="rowgroup"></div>
-            <div class="chart-scale" aria-hidden="true"><span>0%</span><span>25%</span></div>
+            <div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
           </div>
-          <div><p class="stat">21.5%</p><p class="stat-label">of the page on average for the most affected detector</p><p class="stat-detail">Four detectors are at or below 1.1%. Five of six lose pixel F1.</p></div>
+          <div><p class="stat">7.8–67.9</p><p class="stat-label">percentage points lost</p><p class="stat-detail">ADCD-Net gains 3.9 points.</p>
+            <div class="failure-detail fragment fade-in" data-fragment-index="0"><p>DTD’s mean false-positive area</p><strong>17.7%</strong><p>of the whole page</p></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="thank-you" data-title="Would it still find this digit?" data-location="Discussion">
-      <div class="slide-body hook closing">
-        <div>
-          <h2>Would it still<br>find <span class="accent">this digit?</span></h2>
-          <p class="deck-sub">GAF tests for missed edits. PRC tests for false alarms.</p>
-          <p class="email fragment fade-in" data-fragment-index="0">Thank you<br><a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
+    <section id="conclusion" data-title="JPEG alignment can change what gets flagged" data-location="Conclusion">
+      <div class="slide-body conclusion">
+        <p class="conclusion-label">Conclusion</p>
+        <h2>JPEG alignment can change what gets flagged</h2>
+        <div class="conclusion-evidence">
+          <figure>
+            <h3>Align the edit <span>GAF</span></h3>
+            <svg viewBox="0 370 395 126" role="img" aria-label="The detector marks one-line in green. The dashed outline identifies the aligned edit it missed directly above.">
+              <image href="assets/gaf-prediction.png" width="512" height="512"/>
+              <rect x="30" y="390" width="149" height="41" fill="none" stroke="#902e27" stroke-width="2.5" stroke-dasharray="7 4"/>
+            </svg>
+            <figcaption>A forged word can go unmarked.</figcaption>
+          </figure>
+          <figure>
+            <h3>Shift the grid <span>PRC</span></h3>
+            <svg viewBox="116 91 395 126" role="img" aria-label="Green detector predictions spread across several lines after the JPEG grid shifts.">
+              <image href="assets/prc-after.png" width="512" height="512"/>
+            </svg>
+            <figcaption>Genuine words can be flagged.</figcaption>
+          </figure>
         </div>
-        <figure>
-          <div class="receipt"><div class="receipt-registration"><img src="assets/doctamper-opening-receipt-gt.png" alt="The opening receipt with the edited digit annotated"></div></div>
-          <figcaption class="caption">DocTamper receipt excerpt · Ground truth</figcaption>
-        </figure>
+        <p class="conclusion-implication">Test whether a detector still finds the same edits across JPEG saves.</p>
+        <p class="source">Prediction details from BMVC paper, Fig. 1(a–b) · Green marks detector output</p>
+      </div>
+    </section>
+
+    <section id="thank-you" data-title="It’s still the nine." data-location="Discussion">
+      <div class="slide-body closing">
+        <div class="closing-feature">
+          <div class="closing-message">
+            <div class="closing-headlines">
+              <h2 class="closing-prompt">Remember<br>this receipt?</h2>
+              <h2 class="closing-answer fragment fade-in" data-fragment-index="0">It’s still<br>the <span class="accent">nine.</span></h2>
+            </div>
+            <p class="closing-line">A different JPEG save should lead the reviewer back to the same digit.</p>
+            <div class="closing-contact fragment fade-in" data-fragment-index="0">
+              <h3>Thank you. Questions?</h3>
+              <p>Nauman Riaz · <a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
+            </div>
+          </div>
+          <figure class="closing-document">
+            <div class="receipt"><div class="receipt-registration">
+              <img src="assets/doctamper-opening-receipt.png" alt="The receipt from the opening question">
+              <img class="fragment fade-in" data-fragment-index="0" src="assets/doctamper-opening-receipt-gt.png" alt="The ground-truth outline identifies the altered nine">
+            </div></div>
+            <figcaption class="caption">The opening receipt<span class="fragment fade-in" data-fragment-index="0"> · Ground truth</span></figcaption>
+          </figure>
+        </div>
         <nav class="discussion fragment fade-in" data-fragment-index="0" aria-label="Discussion slide shortcuts">
-              <a href="#/forgery-types" data-go="forgery-types">Forgery types</a>
-              <a href="#/gaf-results" data-go="gaf-results">GAF example</a>
-              <a href="#/gaf" data-go="gaf">GAF method</a>
-              <a href="#/prc" data-go="prc">PRC method</a>
-              <a href="#/gaf-comparison" data-go="gaf-comparison">GAF results</a>
-              <a href="#/prc-comparison" data-go="prc-comparison">PRC results</a>
-              <a href="#/prc-results" data-go="prc-results">PRC example</a>
-              <a href="appendix.html" target="_blank" rel="noopener">Q&amp;A appendix</a>
-            </nav>
+          <div class="discussion-tools"><strong>Q&amp;A links</strong><span><kbd>C</kbd> Return to closing</span></div>
+          <div class="discussion-links">
+            <a href="#/forgery-types" data-go="forgery-types">Forgery types</a>
+            <a href="#/gaf" data-go="gaf">GAF method</a>
+            <a href="#/gaf-results" data-go="gaf-results">GAF example</a>
+            <a href="#/gaf-comparison" data-go="gaf-comparison">GAF results</a>
+            <a href="#/prc" data-go="prc">PRC method</a>
+            <a href="#/prc-results" data-go="prc-results">PRC example</a>
+            <a href="#/prc-comparison" data-go="prc-comparison">PRC results</a>
+            <a href="appendix.html" target="_blank" rel="opener">Q&amp;A appendix</a>
+          </div>
+        </nav>
       </div>
     </section>
   </div>
@@ -427,8 +473,8 @@
     <button id="start-presenting-button">Start presenting</button>
     <button id="notes-button">Notes</button>
     <button id="audience-mode-button">Clean view</button>
-    <button id="closing-button">Closing</button>
-    <a href="appendix.html" target="_blank" rel="noopener">Appendix</a>
+    <button id="closing-button" aria-keyshortcuts="c End" title="Return to closing (C or End)">Closing · C</button>
+    <a href="appendix.html" target="_blank" rel="opener">Appendix</a>
     <button id="help-button" aria-label="Keyboard shortcuts">?</button>
     <button id="previous-button" aria-label="Previous step">←</button>
     <button id="next-button" aria-label="Next step">→</button>
@@ -437,20 +483,20 @@
 </nav>
 <dialog id="help-dialog">
   <h2>Presentation shortcuts</h2>
-  <dl><dt>← / →</dt><dd>Previous / next reveal</dd><dt>S</dt><dd>Presenter window</dd><dt>T</dt><dd>Audience / rehearsal view</dd><dt>F</dt><dd>Fullscreen</dd><dt>O</dt><dd>Slide overview</dd><dt>End</dt><dd>Closing and Q&A links</dd></dl>
+  <dl><dt>← / →</dt><dd>Previous / next reveal</dd><dt>S</dt><dd>Presenter window</dd><dt>T</dt><dd>Audience / rehearsal view</dd><dt>F</dt><dd>Fullscreen</dd><dt>O</dt><dd>Slide overview</dd><dt>C / End</dt><dd>Return to closing and Q&amp;A links</dd></dl>
   <button id="close-help">Close</button>
 </dialog>
 <dialog id="references-dialog" aria-label="Paper reference">
   <p>Riaz et al. <cite>Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection</cite>. British Machine Vision Conference, 2026.</p>
-  <p><a href="appendix.html" target="_blank" rel="noopener">Full results and metric definitions</a></p>
+  <p><a href="appendix.html" target="_blank" rel="opener">Full results and metric definitions</a></p>
   <button>Close</button>
 </dialog>
 <script src="vendor/reveal.js"></script>
 <script src="step-notes.js"></script>
 <script src="presenter.js"></script>
 <script src="results.js"></script>
-<script src="narration.js?v=jpeg-narration"></script>
-<script src="deck.js?v=evidence-2"></script>
+<script src="narration.js?v=conference-closing"></script>
+<script src="deck.js?v=conference-closing"></script>
 </body>
 </html>
 
