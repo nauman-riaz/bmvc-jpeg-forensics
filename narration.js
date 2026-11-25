@@ -4,7 +4,8 @@ window.BmvcNarration = {
     "steps": [
       [
         "Good morning, my name is Nauman Riaz.",
-        "Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection"
+        "Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection",
+        "Begin with altered image",
       ]
     ]
   },
@@ -13,11 +14,14 @@ window.BmvcNarration = {
     "steps": [
       [
         "Altered receipt. Can you spot the edit?",
+        "One digit altered.",
         "In the interest of time → reveal."
       ],
       [
-        "This 9. One digit on a whole receipt.",
-        "Forgery detection → find exactly what changed."
+        "This 9. Subtle, small, Naked eye",
+        "Forgery detection.",
+        "Document Claim",
+        "Important domain, reciepts"
       ]
     ]
   },
