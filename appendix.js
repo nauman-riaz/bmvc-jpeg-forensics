@@ -1,6 +1,4 @@
 (() => {
-  const closingLink = document.getElementById("appendix-closing");
-
   function originatingClosingButton() {
     const owner = window.opener;
     if (!owner || owner.closed) return null;
@@ -14,21 +12,19 @@
     }
   }
 
-  closingLink.addEventListener("click", event => {
-    if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-    const button = originatingClosingButton();
-    if (!button) return; // Opening the appendix directly uses the ordinary link.
-    event.preventDefault();
-    button.ownerDocument.querySelector("dialog[open]")?.close();
-    button.click();
-    window.opener.focus();
-    window.close();
-  });
   document.addEventListener("keydown", event => {
     if (event.key.toLowerCase() !== "c" || event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.target.closest("input, textarea, select") || event.target.isContentEditable) return;
     event.preventDefault();
-    closingLink.click();
+    const button = originatingClosingButton();
+    if (button) {
+      button.ownerDocument.querySelector("dialog[open]")?.close();
+      button.click();
+      window.opener.focus();
+      window.close();
+    } else {
+      location.assign("index.html#/thank-you");
+    }
   });
 
   const { models, doc, ts, wfe } = window.BmvcResults;

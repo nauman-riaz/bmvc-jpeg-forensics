@@ -5,7 +5,6 @@
 .appendix h3{font-size:1.15rem}
 .appendix p{max-width:75ch}
 .appendix a{color:var(--accent-ink);text-underline-offset:.2em}
-.appendix nav{display:flex;gap:1.2rem;flex-wrap:wrap;padding-bottom:1.4rem;border-bottom:1px solid var(--rule)}
 .appendix section{margin:2.5rem 0}
 .table-wrap{overflow:auto;border:1px solid var(--rule)}
 .appendix table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.91rem}

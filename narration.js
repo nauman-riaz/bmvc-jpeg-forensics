@@ -107,7 +107,7 @@ window.BmvcNarration = {
     ]
   },
   "thank-you": {
-    "source": "The closing states a practical implication of the BMVC paper’s conclusions. The Q&A appendix contains the complete reported results and metric definitions.",
+    "source": "The closing states a practical implication of the BMVC paper’s conclusions.",
     "steps": [
       "For someone checking a receipt, a different JPEG save should still lead them to the same edited word. That’s the standard these experiments ask us to test. Thank you. I’d be happy to take questions."
     ]
