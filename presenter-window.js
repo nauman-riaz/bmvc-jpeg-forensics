@@ -50,7 +50,15 @@
   });
   for(const [id,action] of Object.entries({'presenter-previous':'previous','presenter-next':'next','presenter-map':'map','presenter-closing':'closing','presenter-mode':'mode'}))$('#'+id).addEventListener('click',()=>send(action));
   $('#presenter-slide').addEventListener('change',event=>{send('jump',Number(event.target.value));event.target.blur();});
-  $('#presenter-focus').addEventListener('click',event=>{const on=document.body.classList.toggle('presenter-focus-notes');event.target.textContent=on?'Show previews':'Focus notes';});
+  $('#presenter-focus').addEventListener('click',event=>{
+    const focusNotes=document.body.classList.toggle('presenter-focus-notes');
+    event.target.textContent=focusNotes?'Show previews':'Focus notes';
+    if(!focusNotes)requestAnimationFrame(()=>{
+      for(const frame of [currentFrame,upcomingFrame]){
+        frame.contentWindow.postMessage(JSON.stringify({method:'layout'}),location.origin);
+      }
+    });
+  });
   $('#presenter-reference-button').addEventListener('click',()=>$('#presenter-references').showModal());
   document.addEventListener('keydown',event=>{
     if(event.target.closest('input,textarea,select')||event.target.isContentEditable||document.querySelector('dialog[open]')||event.ctrlKey||event.metaKey||event.altKey)return;
