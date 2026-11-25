@@ -12,13 +12,6 @@
   const quiet = reducedMotion || receiver;
   document.documentElement.classList.toggle("presenter-receiver", receiver);
   const progress = document.querySelector(".reading-progress span");
-  const discussionReturn = document.createElement("button");
-  discussionReturn.className = "discussion-return";
-  discussionReturn.type = "button";
-  discussionReturn.textContent = "Back to Q&A · C";
-  discussionReturn.setAttribute("aria-keyshortcuts", "c End");
-  discussionReturn.addEventListener("click", goToClosing);
-
   function fragmentGroups(slide, visibleOnly = false) {
     const fragments = slide.querySelectorAll(visibleOnly ? ".fragment.visible" : ".fragment");
     return new Set([...fragments].map(fragment => fragment.dataset.fragmentIndex));
@@ -187,7 +180,6 @@
   function synchronize() {
     const slide = deck.getCurrentSlide();
     if (!slide) return;
-    if (discussionReturn.parentElement && discussionReturn.parentElement !== slide) discussionReturn.remove();
     const index = deck.getIndices().h;
     const count = slides.length;
     const steps = fragmentGroups(slide).size;
@@ -223,15 +215,6 @@
   byId("previous-button").addEventListener("click", () => deck.prev());
   byId("next-button").addEventListener("click", () => deck.next());
   byId("closing-button").addEventListener("click", goToClosing);
-  for (const link of document.querySelectorAll("[data-go]")) {
-    link.addEventListener("click", event => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      goTo(link.dataset.go, true);
-      if (link.closest("#thank-you") && !receiver) byId(link.dataset.go).append(discussionReturn);
-    });
-  }
-
   const help = byId("help-dialog");
   byId("help-button").addEventListener("click", () => help.showModal());
   byId("close-help").addEventListener("click", () => help.close());

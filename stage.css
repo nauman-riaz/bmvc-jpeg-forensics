@@ -31,7 +31,6 @@ html.audience-clean .reveal{height:100%}
 .reveal .slides{text-align:left}
 .reveal .slides>section{width:1440px;height:810px;padding:0;line-height:1.2}
 .reveal .slides>section:focus{outline:none}
-.discussion-return {position:absolute;right:42px;top:18px;z-index:2;padding:4px 0;border:0;background:transparent;color:var(--accent-ink);font:19px var(--sans);text-decoration:underline;text-underline-offset:.2em}
 .slide-body{height:100%;padding:66px 88px;display:flex;flex-direction:column}
 .slide-folio{position:absolute;bottom:26px;right:42px;color:var(--muted);font:18px var(--sans);font-variant-numeric:tabular-nums}
 .reveal .fragment{transition:opacity .33s ease,transform .4s ease}
@@ -310,13 +309,6 @@ strong,.headline {font-weight:700}
 .closing-contact {margin-top:28px;color:var(--muted);font-size:22px;line-height:1.35}
 .closing-contact strong {color:var(--ink)}
 .closing-contact a {text-underline-offset:.18em}
-.discussion {display:flex;align-items:flex-start;flex-direction:column;gap:13px;border-top:1px solid var(--rule);padding-top:16px;font-size:20px}
-.discussion-tools,.discussion-links {display:flex;gap:25px;align-items:baseline}
-.discussion-tools strong {font-size:22px}
-.discussion-tools span {font-size:18px;color:var(--muted)}
-.discussion-tools kbd {border:1px solid var(--rule);border-radius:3px;padding:1px 6px;font:bold 16px var(--sans)}
-.discussion a{color:var(--accent-ink);text-underline-offset:.2em}
-.discussion a:is(:hover,:focus-visible){color:var(--ink)}
 
 html.presenter-receiver .reveal *,
 html.presenter-receiver .reveal *::before,
