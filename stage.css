@@ -304,15 +304,12 @@ strong,.headline {font-weight:700}
 .conclusion-evidence svg {display:block;width:100%;outline:1px solid var(--rule)}
 .conclusion-evidence figcaption {font-size:28px;margin-top:14px}
 .conclusion-implication {padding-top:24px;border-top:1px solid var(--rule);font:35px/1.15 var(--serif)}
-.closing-feature {display:grid;grid-template-columns:minmax(0,1fr) 345px;align-items:center;gap:72px;flex:1}
+.closing-feature {display:flex;align-items:center;flex:1}
 .closing-feature h2 {font-size:108px;line-height:.98}
 .closing-line {max-width:720px;margin:26px 0 0;font:38px/1.22 var(--serif)}
 .closing-contact {margin-top:28px;color:var(--muted);font-size:22px;line-height:1.35}
 .closing-contact strong {color:var(--ink)}
 .closing-contact a {text-underline-offset:.18em}
-.closing-results {justify-self:center;text-align:center}
-.closing-results img {width:270px;height:270px;image-rendering:pixelated}
-.closing-results figcaption {margin-top:12px;font:26px/1.2 var(--serif)}
 .discussion {display:flex;align-items:flex-start;flex-direction:column;gap:13px;border-top:1px solid var(--rule);padding-top:16px;font-size:20px}
 .discussion-tools,.discussion-links {display:flex;gap:25px;align-items:baseline}
 .discussion-tools strong {font-size:22px}
