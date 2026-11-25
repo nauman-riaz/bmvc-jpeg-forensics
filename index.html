@@ -8,8 +8,8 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/reset.css">
   <link rel="stylesheet" href="vendor/reveal.css">
-  <link rel="stylesheet" href="stage.css?v=conference-closing">
-  <link rel="stylesheet" href="methods.css?v=forensic-red">
+  <link rel="stylesheet" href="stage.css?v=manual-talk">
+  <link rel="stylesheet" href="methods.css?v=manual-talk">
   <script src="audience-mode.js"></script>
 </head>
 <body>
@@ -48,7 +48,7 @@
       <div class="slide-body hook">
         <div>
           <h2>Can you spot<br>the <span class="accent">edit?</span></h2>
-          <p class="deck-sub fragment fade-in" data-fragment-index="0">Which pixels were changed?</p>
+          <p class="deck-sub fragment fade-in" data-fragment-index="0">The outlined nine was changed.</p>
         </div>
         <figure>
           <div class="receipt" data-morph="opening-receipt"><div class="receipt-registration">
@@ -129,13 +129,30 @@
       <div class="slide-body">
         <h2>Detectors can localize subtle edits</h2>
         <p class="deck-sub">Two changed digits in a receipt’s date and time</p>
-        <div class="prediction-set">
-          <figure><figcaption>Input</figcaption><img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="Input receipt excerpt"></figure>
-          <figure><figcaption>Ground truth</figcaption><img src="assets/current-detectors-truth.png" alt="Ground truth highlighting the two edited digits"></figure>
-          <figure class="fragment fade-in" data-fragment-index="0"><figcaption>DTD prediction</figcaption><img src="assets/current-detectors-dtd.png" alt="Prediction covers both edited digits and some authentic pixels"></figure>
-          <figure class="fragment fade-in" data-fragment-index="0"><figcaption>ADCD-Net prediction</figcaption><img src="assets/current-detectors-adcd.png" alt="Prediction covers both edited digits closely"></figure>
+        <div class="detector-evidence">
+          <figure class="detector-input-receipt">
+            <div class="date-locator"><img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="Input receipt with the date and time outlined near the bottom"></div>
+            <figcaption class="caption">Input receipt</figcaption>
+          </figure>
+          <div class="prediction-details">
+            <figure><figcaption>Ground truth</figcaption>
+              <svg viewBox="83 403 390 75" role="img" aria-label="Ground truth highlights one digit in the date and one in the time">
+                <image href="assets/current-detectors-truth.png" width="497" height="495" preserveAspectRatio="none"/>
+              </svg>
+            </figure>
+            <figure class="fragment fade-in" data-fragment-index="0"><figcaption>DTD prediction</figcaption>
+              <svg viewBox="83 403 390 75" role="img" aria-label="DTD marks the two edited digits and an additional digit in the time">
+                <image href="assets/current-detectors-dtd.png" width="497" height="495" preserveAspectRatio="none"/>
+              </svg>
+            </figure>
+            <figure class="fragment fade-in" data-fragment-index="0"><figcaption>ADCD-Net prediction</figcaption>
+              <svg viewBox="83 403 390 75" role="img" aria-label="ADCD-Net marks both edited digits">
+                <image href="assets/current-detectors-adcd.png" width="497" height="495" preserveAspectRatio="none"/>
+              </svg>
+            </figure>
+          </div>
         </div>
-        <p class="prediction-key"><span></span>Marked pixels</p>
+        <p class="prediction-key"><span aria-hidden="true"></span>Marked pixels <span class="prediction-omission fragment fade-in" data-fragment-index="0">DTD also flagged part of the store header outside this crop.</span></p>
         <p class="source"><a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf">Wong et al., ICCV 2025 supplement, Figure B</a> · DocTamper example</p>
       </div>
     </section>
@@ -284,9 +301,9 @@
       </div>
     </section>
 
-    <section id="gaf-results" data-title="Which edit does the detector mark?" data-location="GAF evidence">
+    <section id="gaf-results" data-title="The aligned edit goes unmarked" data-location="GAF evidence">
       <div class="slide-body">
-        <h2>Which edit does the detector mark?</h2>
+        <h2>The aligned edit goes unmarked</h2>
         <p class="deck-sub">One document contains both aligned and standard edits.</p>
         <div class="pair evidence">
           <figure><figcaption class="caption">Ground truth</figcaption><div class="plate"><img src="assets/gaf-regions.png" alt="Paper figure with aligned edits in red and standard edits in blue"></div></figure>
@@ -422,34 +439,29 @@
             <figcaption>Genuine words can be flagged.</figcaption>
           </figure>
         </div>
-        <p class="conclusion-implication">Test whether a detector still finds the same edits across JPEG saves.</p>
+        <p class="conclusion-implication">GAF and PRC generate matched test images without querying the detector.</p>
         <p class="source">Prediction details from BMVC paper, Fig. 1(a–b) · Green marks detector output</p>
       </div>
     </section>
 
-    <section id="thank-you" data-title="It’s still the nine." data-location="Discussion">
+    <section id="thank-you" data-title="Thank you" data-location="Discussion">
       <div class="slide-body closing">
+        <header class="conference">
+          <div class="mark"><img src="assets/logos/bmvc-2026.png" alt="BMVC 2026"></div>
+          <p class="venue">British Machine Vision Conference<small>Lancaster, UK · 23–26 November 2026</small></p>
+        </header>
         <div class="closing-feature">
-          <div class="closing-message">
-            <div class="closing-headlines">
-              <h2 class="closing-prompt">Remember<br>this receipt?</h2>
-              <h2 class="closing-answer fragment fade-in" data-fragment-index="0">It’s still<br>the <span class="accent">nine.</span></h2>
-            </div>
-            <p class="closing-line">A different JPEG save should lead the reviewer back to the same digit.</p>
-            <div class="closing-contact fragment fade-in" data-fragment-index="0">
-              <h3>Thank you. Questions?</h3>
-              <p>Nauman Riaz · <a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
-            </div>
+          <div>
+            <h2>Thank <span class="accent">you.</span></h2>
+            <p class="closing-line">A reliable detector should still point to the edited word after a different JPEG save.</p>
+            <p class="closing-contact"><strong>Nauman Riaz</strong><br><a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
           </div>
-          <figure class="closing-document">
-            <div class="receipt"><div class="receipt-registration">
-              <img src="assets/doctamper-opening-receipt.png" alt="The receipt from the opening question">
-              <img class="fragment fade-in" data-fragment-index="0" src="assets/doctamper-opening-receipt-gt.png" alt="The ground-truth outline identifies the altered nine">
-            </div></div>
-            <figcaption class="caption">The opening receipt<span class="fragment fade-in" data-fragment-index="0"> · Ground truth</span></figcaption>
+          <figure class="closing-results">
+            <a href="appendix.html" target="_blank" rel="opener" aria-label="Open full results and metric definitions"><img src="assets/results-qr.png" alt="QR code for the full results and metric definitions"></a>
+            <figcaption>Scan for the full results</figcaption>
           </figure>
         </div>
-        <nav class="discussion fragment fade-in" data-fragment-index="0" aria-label="Discussion slide shortcuts">
+        <nav class="discussion" aria-label="Discussion slide shortcuts">
           <div class="discussion-tools"><strong>Q&amp;A links</strong><span><kbd>C</kbd> Return to closing</span></div>
           <div class="discussion-links">
             <a href="#/forgery-types" data-go="forgery-types">Forgery types</a>
@@ -495,8 +507,8 @@
 <script src="step-notes.js"></script>
 <script src="presenter.js"></script>
 <script src="results.js"></script>
-<script src="narration.js?v=conference-closing"></script>
-<script src="deck.js?v=conference-closing"></script>
+<script src="narration.js?v=manual-talk"></script>
+<script src="deck.js?v=manual-talk"></script>
 </body>
 </html>
 

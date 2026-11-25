@@ -8,7 +8,7 @@ Nauman Riaz · BMVC 2026 conference presentation
 
 The 16-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
 
-- Arrow keys or Space advance through slides and reveals.
+- Use the arrow keys or Space to advance slides and reveals at your own pace. The opening receipt stays unmarked until you advance.
 - **T** shows or hides the rehearsal toolbar.
 - **S** opens the presenter window with narration and a timer.
 - **F** enters fullscreen; **O** opens the overview; **C** or **End** returns to the closing slide.

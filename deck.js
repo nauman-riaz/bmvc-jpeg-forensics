@@ -1,7 +1,13 @@
 (() => {
   const byId = id => document.getElementById(id);
   const slides = [...document.querySelectorAll(".slides > section")];
-  const receiver = new URLSearchParams(location.search).has("receiver");
+  const url = new URL(location.href);
+  // Reveal applies URL options after the deck configuration. Shared links must keep manual pacing.
+  if (url.searchParams.has("autoSlide")) {
+    url.searchParams.delete("autoSlide");
+    history.replaceState(history.state, "", url);
+  }
+  const receiver = url.searchParams.has("receiver");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const quiet = reducedMotion || receiver;
   document.documentElement.classList.toggle("presenter-receiver", receiver);
@@ -141,7 +147,7 @@
           .find(candidate => candidate.dataset.morph === from.dataset.morph);
         return to ? [{ from, to, options: { measure: element => element.getBoundingClientRect() } }] : [];
       }),
-    autoSlide: 0, showNotes: false, scrollActivationWidth: false,
+    autoSlide: false, showNotes: false, scrollActivationWidth: false,
     keyboardCondition: event => {
       const editing = event.target?.closest?.("input, textarea, select") || event.target?.isContentEditable;
       const modifiedClosingKey = [35, 67].includes(event.keyCode) && (event.altKey || event.ctrlKey || event.metaKey);
