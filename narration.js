@@ -20,7 +20,7 @@ window.BmvcNarration = {
       [
         "This 9. Subtle, small, Naked eye",
         "Forgery detection.",
-        "document claim",
+        "altering a document could change what a document claims",
         "Important domain, reciepts"
       ]
     ]
