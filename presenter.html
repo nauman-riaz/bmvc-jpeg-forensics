@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Presenter · Nauman Riaz</title><link rel="icon" href="data:,"><link rel="stylesheet" href="presenter-window.css?v=wide-slide-view">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Presenter · Nauman Riaz</title><link rel="icon" href="data:,"><link rel="stylesheet" href="presenter-window.css?v=stacked-previews">
 </head><body class="colloquium-presenter" data-speaker-layout="default">
 <nav id="presenter-toolbar" aria-label="Presenter controls"><div class="presenter-top"><div><span class="presenter-brand">Your presenter window · Keep this window private</span><span class="presenter-title" id="presenter-title"></span></div><span class="presenter-position" id="presenter-position" aria-live="polite">Connecting…</span></div><div class="presenter-actions"><button id="presenter-previous">← Previous</button><button id="presenter-next" class="presenter-primary">Next →</button><select id="presenter-slide" aria-label="Jump to slide"></select><button id="presenter-map">Research map</button><button id="presenter-closing" aria-keyshortcuts="c End" title="Return to closing (C or End)">Closing · C</button><button id="presenter-reference-button">References</button><button id="presenter-focus">Focus notes</button><button id="presenter-mode">Return to rehearsal</button></div></nav>
 <p id="presenter-connection">Connecting to your audience window…</p>
 <div id="presenter-workspace">
+<div id="slide-previews">
   <section id="current-slide" class="slide-preview" aria-labelledby="current-label">
     <header><h2 id="current-label">Current slide</h2><button type="button" data-enlarge="current" aria-label="Enlarge current slide">Enlarge</button></header>
     <div class="preview-surface"><iframe title="Current audience slide" tabindex="-1"></iframe></div>
@@ -12,6 +13,7 @@
     <header><h2 id="upcoming-label">Upcoming</h2><button type="button" data-enlarge="upcoming" aria-label="Enlarge upcoming slide">Enlarge</button></header>
     <div class="preview-surface"><iframe title="Upcoming audience step" tabindex="-1"></iframe></div>
   </section>
+</div>
 <main id="speaker-controls"><div class="speaker-controls-time"><span class="clock" id="presenter-clock"></span><span class="timer" id="presenter-timer" title="Elapsed time · click to reset" role="button" tabindex="0">00:00</span><button type="button" id="presenter-reset-timer" title="Restart elapsed time from 00:00">Reset timer</button></div><div class="speaker-controls-notes"><div class="value"></div></div></main>
 </div>
 <dialog id="presenter-references" aria-label="Paper references"></dialog>

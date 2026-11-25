@@ -17,15 +17,20 @@
 html,body {height:100%;overflow:hidden}
 body.colloquium-presenter {display:flex;flex-direction:column}
 #presenter-workspace {
-  flex:1;min-height:0;display:grid;gap:12px 20px;padding:10px 16px 12px;
-  grid-template-areas:"current upcoming" "notes notes";
-  grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
-  grid-template-rows:minmax(0,1fr) clamp(130px,20vh,185px);
+  flex:1;min-height:0;display:grid;gap:20px;padding:10px 16px 12px;
+  grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
 }
-#current-slide {grid-area:current}
-#upcoming-slide {grid-area:upcoming}
-.slide-preview {display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0;min-width:0}
-.slide-preview header {display:flex;gap:8px;align-items:center;justify-content:space-between;margin:0 0 5px}
+#slide-previews {
+  container-type:size;min-height:0;min-width:0;display:flex;
+  flex-direction:column;align-items:flex-start;gap:var(--stack-gap);
+  --stack-gap:10px;--heading-height:31px;--upcoming-ratio:.45;
+  /* Fit both 16:9 images, their headings and the gap in the left column. */
+  --available-height:calc(100cqh - 2 * var(--heading-height) - var(--stack-gap));
+  --current-height:min(56.25cqw, calc(var(--available-height) / (1 + var(--upcoming-ratio))));
+}
+.slide-preview {flex:none}
+.slide-preview header {height:var(--heading-height);display:flex;gap:8px;align-items:center;justify-content:space-between}
 .slide-preview h2 {margin:0;font-size:15px;font-weight:600}
 .slide-preview button {
   font:inherit;font-size:14px;color:inherit;background:transparent;
@@ -33,18 +38,17 @@ body.colloquium-presenter {display:flex;flex-direction:column}
 }
 .slide-preview button:hover {background:#e0e6dd}
 .slide-preview button:focus-visible {outline:2px solid #23786c;outline-offset:2px}
-.preview-surface {container-type:size;display:grid;place-items:start center;min-height:0;min-width:0}
+.preview-surface {height:var(--current-height);aspect-ratio:16/9}
+#upcoming-slide .preview-surface {height:calc(var(--current-height) * var(--upcoming-ratio))}
 .preview-surface iframe {
-  width:min(100cqw,177.7778cqh);height:min(100cqh,56.25cqw);
+  width:100%;height:100%;
   display:block;border:1px solid #b7c2b6;background:#f3f0e8;pointer-events:none
 }
 #speaker-controls {
-  grid-area:notes;min-width:0;min-height:0;overflow:auto;border-top:1px solid #c8d0c4;
-  padding:10px 6px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;
-  align-content:start;align-items:start;gap:12px 24px;font-size:24px;line-height:1.5;
+  min-width:0;min-height:0;overflow:auto;border-left:1px solid #c8d0c4;
+  padding:0 0 0 16px;font-size:24px;line-height:1.5;
 }
-.speaker-controls-notes {grid-column:1;grid-row:1}
-.speaker-controls-time {grid-column:2;grid-row:1}
+body.colloquium-presenter .speaker-controls-time {flex-wrap:wrap;gap:8px}
 .clock {order:1}
 .note-position {margin-top:0}
 #presenter-connection {
@@ -53,32 +57,19 @@ body.colloquium-presenter {display:flex;flex-direction:column}
 }
 [hidden],#presenter-references:not([open]) {display:none!important}
 #presenter-workspace[data-enlarged] {
-  grid-template-columns:minmax(0,3fr) minmax(245px,1fr);
-  grid-template-rows:minmax(0,1fr);
+  grid-template-columns:minmax(0,3fr) minmax(min(245px,30%),1fr);
 }
-#presenter-workspace[data-enlarged="current"] {grid-template-areas:"current notes"}
-#presenter-workspace[data-enlarged="upcoming"] {grid-template-areas:"upcoming notes"}
+#presenter-workspace[data-enlarged] .slide-preview .preview-surface {
+  height:min(56.25cqw,calc(100cqh - var(--heading-height)));
+}
 #presenter-workspace[data-enlarged="current"] #upcoming-slide,
 #presenter-workspace[data-enlarged="upcoming"] #current-slide,
-body.presenter-focus-notes .slide-preview {display:none}
-#presenter-workspace[data-enlarged] #speaker-controls {
-  display:flex;flex-direction:column;align-items:stretch;border-top:0;
-  border-left:1px solid #c8d0c4;padding:0 0 0 14px;
-}
-#presenter-workspace[data-enlarged] .speaker-controls-time {flex-wrap:wrap;gap:8px}
-body.presenter-focus-notes #presenter-workspace {
-  grid-template-areas:"notes";grid-template-columns:1fr;grid-template-rows:minmax(0,1fr)
-}
+body.presenter-focus-notes #slide-previews {display:none}
+body.presenter-focus-notes #presenter-workspace {grid-template-columns:minmax(0,1fr)}
+body.presenter-focus-notes #speaker-controls {border-left:0;padding-left:0}
 @media (max-width:720px) {
-  #presenter-workspace {gap:8px;padding:6px 8px;grid-template-rows:minmax(0,1fr) minmax(155px,35%)}
-  #presenter-workspace[data-enlarged] {
-    grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) minmax(155px,35%)
-  }
-  #presenter-workspace[data-enlarged="current"] {grid-template-areas:"current" "notes"}
-  #presenter-workspace[data-enlarged="upcoming"] {grid-template-areas:"upcoming" "notes"}
-  #speaker-controls,#presenter-workspace[data-enlarged] #speaker-controls {
-    display:flex;flex-direction:column;align-items:stretch;gap:0;padding:4px;border-left:0;border-top:1px solid #c8d0c4
-  }
+  #presenter-workspace {gap:8px;padding:6px 8px;grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+  #speaker-controls {padding-left:8px}
 }
 
 /* A visible reset action stays beside the elapsed timer in either notes layout. */
