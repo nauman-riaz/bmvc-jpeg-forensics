@@ -3,12 +3,27 @@
   const $=selector=>document.querySelector(selector);
   let current=null,lastKey=null,previewBase=null,started=Date.now();
   const currentFrame=$('#current-slide iframe'),upcomingFrame=$('#upcoming-slide iframe');
-  function geometry(){
-    const top=Math.ceil($('#presenter-toolbar').getBoundingClientRect().height)+18;
-    const preview=Math.max(100,(document.documentElement.clientHeight-top-42)/2);
-    for(const [name,value] of Object.entries({'--presenter-top':top,'--current-top':top+8,'--preview-height':preview,'--upcoming-top':top+preview+28}))document.documentElement.style.setProperty(name,value+'px');
+  const workspace=$('#presenter-workspace');
+  const previewResize=new ResizeObserver(entries=>{
+    for(const {target,contentRect} of entries){
+      if(contentRect.width && contentRect.height){
+        target.contentWindow.postMessage(JSON.stringify({method:'layout'}),location.origin);
+      }
+    }
+  });
+  for(const frame of [currentFrame,upcomingFrame])previewResize.observe(frame);
+  const enlargeButtons=workspace.querySelectorAll('button[data-enlarge]');
+  for(const button of enlargeButtons){
+    button.addEventListener('click',()=>{
+      if(workspace.dataset.enlarged===button.dataset.enlarge)delete workspace.dataset.enlarged;
+      else workspace.dataset.enlarged=button.dataset.enlarge;
+      for(const control of enlargeButtons){
+        const enlarged=workspace.dataset.enlarged===control.dataset.enlarge;
+        control.textContent=enlarged?'Show both':'Enlarge';
+        control.setAttribute('aria-label',enlarged?'Show both slide previews':'Enlarge '+control.dataset.enlarge+' slide');
+      }
+    });
   }
-  new ResizeObserver(geometry).observe($('#presenter-toolbar'));window.addEventListener('resize',geometry);geometry();
   function send(action,value){
     if(window.opener&&!window.opener.closed)window.opener.postMessage(JSON.stringify({namespace:'colloquium-presenter',action,value}),location.origin);
   }
@@ -53,15 +68,11 @@
   $('#presenter-focus').addEventListener('click',event=>{
     const focusNotes=document.body.classList.toggle('presenter-focus-notes');
     event.target.textContent=focusNotes?'Show previews':'Focus notes';
-    if(!focusNotes)requestAnimationFrame(()=>{
-      for(const frame of [currentFrame,upcomingFrame]){
-        frame.contentWindow.postMessage(JSON.stringify({method:'layout'}),location.origin);
-      }
-    });
   });
   $('#presenter-reference-button').addEventListener('click',()=>$('#presenter-references').showModal());
   document.addEventListener('keydown',event=>{
     if(event.target.closest('input,textarea,select')||event.target.isContentEditable||document.querySelector('dialog[open]')||event.ctrlKey||event.metaKey||event.altKey)return;
+    if(event.key===' ' && event.target.closest('button'))return;
     const action={ArrowRight:'next',ArrowDown:'next',' ':'next',PageDown:'next',ArrowLeft:'previous',ArrowUp:'previous',PageUp:'previous',m:'map',M:'map',c:'closing',C:'closing',End:'closing',t:'mode',T:'mode',s:'noop',S:'noop'}[event.key];
     if(action){event.preventDefault();send(action);}
   });

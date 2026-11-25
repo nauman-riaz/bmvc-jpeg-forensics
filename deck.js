@@ -127,6 +127,7 @@
   window.addEventListener("hashchange", normalizeLegacySlideLink);
   const deck = new Reveal({
     width: 1440, height: 810, margin: 0, center: false,
+    ...(receiver ? {minScale: 0.05} : {}),
     controls: false, progress: false, slideNumber: false,
     hash: true, fragmentInURL: true, history: false,
     transition: quiet ? "none" : "fade",

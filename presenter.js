@@ -23,8 +23,8 @@
       if(!popup||popup.closed){
         popup=window.open('','bmvc-presenter','width=1320,height=860');
         if(!popup){alert('The presenter window could not open. Please allow popups for this presentation, then click Start presenting again.');return null;}
-        const url=new URL('presenter.html',location.href);
-        if(popup.location.href==='about:blank'||popup.location.pathname!==url.pathname)popup.location.replace(url.href);
+        const url=new URL('presenter.html?v=wide-slide-view',location.href);
+        if(popup.location.href!==url.href)popup.location.replace(url.href);
       }
       popup.focus();
       if(present)ColloquiumAudience.setClean(true);
