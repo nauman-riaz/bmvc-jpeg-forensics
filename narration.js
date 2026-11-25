@@ -107,9 +107,9 @@ window.BmvcNarration = {
     ]
   },
   "thank-you": {
-    "source": "The closing states a practical implication of the BMVC paper’s conclusions.",
+    "source": "The receipt with two changed digits comes from the published example on slide 5. The missed edits and false alarms come from our GAF and PRC experiments.",
     "steps": [
-      "For someone checking a receipt, a different JPEG save should still lead them to the same edited word. That’s the standard these experiments ask us to test. Thank you. I’d be happy to take questions."
+      "We started by asking which clue helped the detector find those two digits. Our experiments showed how much the JPEG grid can matter. When an edit lined up with the grid, a detector could miss it. When we shifted the grid, a detector could flag words nobody had changed. Thank you. I’d be happy to take questions."
     ]
   }
 };
