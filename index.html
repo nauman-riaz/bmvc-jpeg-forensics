@@ -47,7 +47,7 @@
       <div class="slide-body hook">
         <div>
           <h2>Can you spot<br>the <span class="accent">edit?</span></h2>
-          <p class="deck-sub fragment fade-in" data-fragment-index="0">The outlined nine was changed.</p>
+          <p class="deck-sub fragment fade-in" data-fragment-index="0">It’s this 9.</p>
         </div>
         <figure>
           <div class="receipt" data-morph="opening-receipt"><div class="receipt-registration">
@@ -102,7 +102,7 @@
               <div class="alternate-source render-tile" aria-hidden="true"><span>Text renderer</span><b class="sample-source">48.50</b></div>
               <span class="transfer-arrow external-arrow" aria-hidden="true"></span>
             </div>
-            <p>From a newly rendered patch</p>
+            <p>Drawn by a text renderer</p>
           </article>
         </div>
         <p class="source">Schematic examples</p>
@@ -117,7 +117,7 @@
           <dl class="scope-path">
             <div><dt>Capture</dt><dd>A camera or mobile scanner can save the page as JPEG.</dd></div>
             <div><dt>Share</dt><dd>Apps such as WhatsApp commonly compress photos sent in chats.</dd></div>
-            <div><dt>Review</dt><dd>The detector receives the image and the traces of its compression history.</dd></div>
+            <div><dt>Review</dt><dd>By the time the detector sees the page, it may have been compressed more than once.</dd></div>
           </dl>
         </div>
         <p class="source"><a href="https://developers.google.com/ml-kit/vision/doc-scanner/android">Google ML Kit document scanner</a> · <a href="https://faq.whatsapp.com/453914586839706/">WhatsApp media sharing</a></p>
@@ -152,7 +152,7 @@
           </div>
         </div>
         <p class="prediction-key"><span aria-hidden="true"></span>Marked pixels <span class="prediction-omission fragment fade-in" data-fragment-index="0">DTD also flagged part of the store header outside this crop.</span></p>
-        <p class="source"><a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf">Wong et al., ICCV 2025 supplement, Figure B</a> · DocTamper example</p>
+        <p class="source">DocTamper example from <a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf">Wong et al., ICCV 2025</a></p>
       </div>
     </section>
 
@@ -162,7 +162,6 @@
         <div class="architecture-layout">
           <figure>
             <img data-morph="detector-receipt" src="assets/current-detectors-input.png" alt="The receipt with the two changed digits">
-            <figcaption class="caption">The same receipt</figcaption>
           </figure>
           <div class="detector-flow" role="img" aria-label="In DTD, image pixels feed the Visual Perception Head. JPEG DCT coefficients and the quantization table feed the Frequency Perception Head. The model fuses features from both branches to predict the edited pixels.">
             <h3>Inside DTD</h3>
@@ -171,7 +170,7 @@
             <div class="fusion-output">Fused features <span aria-hidden="true">→</span> Predicted mask</div>
           </div>
         </div>
-        <p class="source"><a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Qu_Towards_Robust_Tampered_Text_Detection_in_Document_Image_New_Dataset_CVPR_2023_paper.pdf#page=5">Architecture adapted from Qu et al., CVPR 2023, Fig. 4</a> · Receipt from Wong et al., ICCV 2025 supplement, Fig. B</p>
+        <p class="source">DTD architecture adapted from <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Qu_Towards_Robust_Tampered_Text_Detection_in_Document_Image_New_Dataset_CVPR_2023_paper.pdf">Qu et al., CVPR 2023</a></p>
       </div>
     </section>
 
@@ -204,7 +203,7 @@
             </div>
           </div>
         </div>
-        <p class="source">Illustrative grid over the receipt from <a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf">Wong et al., ICCV 2025 supplement, Fig. B</a></p>
+        <p class="source">Illustrative 8 × 8 grid</p>
       </div>
     </section>
 
@@ -294,7 +293,7 @@
                 <li class="fragment fade-in" data-fragment-index="2"><span>03</span><div><strong>Copy the patch</strong><p>Watch the source grid travel with the replacement text.</p></div></li>
               </ol>
             </div>
-            <p class="gaf-common-protocol"><strong>Matched in both branches</strong> Source and target text, edit operation and JPEG schedule.</p>
+            <p class="gaf-common-protocol">We copy the same text to the same place and use the same JPEG settings in both versions.</p>
             <span class="state-message method-screen-reader" aria-live="polite">Source and target text regions selected</span>
 
       </div>
@@ -305,18 +304,18 @@
         <h2>The aligned edit goes <em class="accent">unmarked</em></h2>
         <p class="deck-sub">One document contains both aligned and standard edits.</p>
         <div class="pair evidence">
-          <figure><figcaption class="caption">Ground truth</figcaption><div class="plate"><img src="assets/gaf-regions.png" alt="Paper figure with aligned edits in red and standard edits in blue"></div></figure>
+          <figure><figcaption class="caption">Ground truth</figcaption><div class="plate"><img src="assets/gaf-regions.png" alt="Aligned edits in red and standard edits in blue"></div></figure>
           <figure class="fragment fade-in" data-fragment-index="0"><figcaption class="caption">Detector prediction</figcaption><div class="plate"><img src="assets/gaf-prediction.png" alt="Green predictions mark standard edits and leave the aligned red regions unmarked"><div class="missed" aria-hidden="true"></div></div></figure>
-          <aside class="annotation fragment fade-in" data-fragment-index="0"><p><b>Aligned edit</b>Missed inside the dashed box.</p><p><b>Standard edit</b>“one-line” is marked.</p></aside>
+          <aside class="annotation fragment fade-in" data-fragment-index="0"><p><b>Aligned edit</b>The detector missed the word in the dashed box.</p><p><b>Standard edit</b>It flagged “one-line.”</p></aside>
         </div>
-        <p class="source">BMVC paper · Figure 1(a) · Aligned edits in red, standard edits in blue, predictions in green</p>
+        <p class="source">Aligned edits in red, standard edits in blue, detector predictions in green</p>
       </div>
     </section>
 
     <section id="gaf-comparison" data-title="All six detectors lose F1 on aligned copy–move" data-location="GAF results across models">
       <div class="slide-body">
         <h2><em class="accent">All six</em> detectors lose F1 on aligned copy–move</h2>
-        <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
+        <p class="deck-sub">Pixel-level F1 on the DocTamper test set</p>
         <div class="chart-wrap">
           <div class="chart" role="table" aria-label="Paired unaligned edit and aligned edit pixel F1">
             <div class="legend" role="row">
@@ -367,7 +366,7 @@
                 <li class="fragment fade-up" data-fragment-index="2"><strong>Crop</strong><span>Restore the original image dimensions. JPEG block boundaries stay shifted.</span></li>
               </ol>
             </div>
-            <p class="footnote">Schematic grid · The original forgery and JPEG schedule are matched across both branches.</p>
+            <p class="footnote">Both versions start with the same edited page and go through the same JPEG saves.</p>
 
       </div>
     </section>
@@ -382,24 +381,24 @@
             <aside class="annotation fragment fade-in" data-fragment-index="0"><p><b>Same page, same edit</b>The prediction spreads to more lines.</p></aside>
           </div>
           <div class="prc-annotated fragment fade-in" data-fragment-index="1">
-            <p class="annotated-lead">A second page with its ground truth</p>
+            <p class="annotated-lead">Only the two red regions were edited. DTD also flagged the text in yellow.</p>
             <div class="prc-panels">
-              <figure><figcaption>Document</figcaption><img src="assets/prc-example.png" alt="DocTamper document excerpt from the TestingSet row"></figure>
+              <figure><figcaption>Document</figcaption><img src="assets/prc-example.png" alt="Text from a second DocTamper test page"></figure>
               <figure><figcaption>Ground truth</figcaption><img src="assets/prc-truth.png" alt="Two small regions in red are annotated as edited"></figure>
               <figure><figcaption>DTD after PRC</figcaption><img src="assets/prc-dtd-figure4.png" alt="Blue true positives occupy small patches, while yellow false positives cover many surrounding lines"></figure>
             </div>
             <p class="mask-key"><span><i class="mask-truth"></i>Edited pixels</span><span><i class="mask-hit"></i>Correctly flagged</span><span><i class="mask-false"></i>Falsely flagged</span></p>
           </div>
         </div>
-        <p class="source prc-predictions">BMVC paper · Figure 1(b) · Green marks detector predictions</p>
-        <p class="source fragment fade-in" data-fragment-index="1">BMVC paper · Figure 4 · DocTamper TestingSet row, with the corresponding annotation and DTD output</p>
+        <p class="source prc-predictions">Green shows what the detector flagged.</p>
+        <p class="source fragment fade-in" data-fragment-index="1">Second example from the DocTamper test set</p>
       </div>
     </section>
 
     <section id="prc-comparison" data-title="Five of six detectors lose F1 after the shift" data-location="PRC results across models">
       <div class="slide-body">
         <h2><em class="accent">Five of six</em> detectors lose F1 after the shift</h2>
-        <p class="deck-sub">DocTamper TestingSet · Pixel-level F1</p>
+        <p class="deck-sub">Pixel-level F1 on the DocTamper test set</p>
         <div class="chart-wrap">
           <div class="chart" role="table" aria-label="Paired pixel-level F1 with the original JPEG grid and after PRC">
             <div class="legend" role="row">
@@ -439,7 +438,6 @@
           </figure>
         </div>
         <p class="conclusion-implication">GAF and PRC generate matched test images without querying the detector.</p>
-        <p class="source">Prediction details from BMVC paper, Fig. 1(a–b) · Green marks detector output</p>
       </div>
     </section>
 
@@ -452,7 +450,7 @@
         <div class="closing-feature">
           <div>
             <h2>Thank <span class="accent">you.</span></h2>
-            <p class="closing-line">A reliable detector should still point to the edited word after a different JPEG save.</p>
+            <p class="closing-line">Save the page again as a JPEG. A reliable detector should still find the same edited word.</p>
             <p class="closing-contact"><strong>Nauman Riaz</strong><br><a href="mailto:nauman.riaz@dfki.de">nauman.riaz@dfki.de</a></p>
           </div>
         </div>
@@ -479,8 +477,9 @@
   <dl><dt>← / →</dt><dd>Previous / next reveal</dd><dt>S</dt><dd>Presenter window</dd><dt>T</dt><dd>Audience / rehearsal view</dd><dt>F</dt><dd>Fullscreen</dd><dt>O</dt><dd>Slide overview</dd></dl>
   <button id="close-help">Close</button>
 </dialog>
-<dialog id="references-dialog" aria-label="Paper reference">
-  <p>Riaz et al. <cite>Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection</cite>. British Machine Vision Conference, 2026.</p>
+<dialog id="references-dialog" aria-label="External references">
+  <p>DocTamper and the DTD architecture · <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Qu_Towards_Robust_Tampered_Text_Detection_in_Document_Image_New_Dataset_CVPR_2023_paper.pdf" target="_blank" rel="noopener">Qu et al., CVPR 2023</a></p>
+  <p>Receipt and detector predictions · <a href="https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf" target="_blank" rel="noopener">Wong et al., ICCV 2025</a></p>
   <button>Close</button>
 </dialog>
 <script src="vendor/reveal.js"></script>
