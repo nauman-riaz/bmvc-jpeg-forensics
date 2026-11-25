@@ -6,6 +6,8 @@ Nauman Riaz · BMVC 2026 conference presentation
 
 [Open the presentation](https://nauman-riaz.github.io/bmvc-jpeg-forensics/)
 
+[Download the presentation PDF](BMVC-2026-Mistaking-Periodicity-for-Manipulation.pdf) (31 pages, one per slide or reveal).
+
 The 16-slide browser presentation includes staged animations, a Q&A appendix, and a presenter view with per-reveal speaker notes and an elapsed timer.
 
 - Use the arrow keys or Space to advance slides and reveals at your own pace. The opening receipt stays unmarked until you advance.
