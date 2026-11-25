@@ -194,8 +194,9 @@ window.BmvcNarration = {
         "GAF → align the edit, and a detector can miss a forged word.",
         "PRC → shift the grid, and it can flag genuine words.",
         "Both tests use matched pages and need no detector queries.",
-        "Back to the receipt → imagine a detector circled the 9. What made it point there?",
-        "Same words, different grid, different prediction. Thank you."
+        "Opening receipt → “Can you spot the edit?”",
+        "Suppose a detector circles the 9. Can we trust that prediction?",
+        "Did it spot the forgery, or is it mistaking periodicity for manipulation?"
       ]
     ]
   },
