@@ -5,7 +5,7 @@ window.BmvcNarration = {
       [
         "Good morning, my name is Nauman Riaz.",
         "Today I’ll present my paper, “Mistaking Periodicity for Manipulation: JPEG-Induced Structural Bias in Document Tampering Detection.”",
-        "Point to the receipt. One digit was changed."
+        "Point to the image. “Let me start with this receipt. Someone has altered it.”"
       ]
     ]
   },
@@ -13,13 +13,14 @@ window.BmvcNarration = {
     "source": "DocTamper (Qu et al., CVPR 2023), img7_compression_98.png from the local images/imgs and boxes exports. The original annotation outlines a digit in the number above the item description.",
     "steps": [
       [
-        "Ask “Can you spot the edit?”",
-        "Advance to show the answer."
+        "Stay on the receipt. Ask “Can you spot the edit?”",
+        "“In the interest of time, let me show you.” Click to reveal."
       ],
       [
-        "Point to the outlined 9 above the item description.",
-        "The reviewer needs the exact digit. That’s the localization task.",
-        "How could someone replace that digit?"
+        "“It’s this 9.” Point to the outline above the item description.",
+        "One digit on a whole receipt. Easy to miss at a glance.",
+        "Why it matters — on a receipt or invoice, one changed digit can change what someone is paid.",
+        "Document tampering detection — has anything been altered? Localization — where exactly is the edit?"
       ]
     ]
   },
@@ -27,15 +28,16 @@ window.BmvcNarration = {
     "source": "BMVC manuscript Methodology, unified forgery operator and GAF variants. The source-to-target constructions on screen are schematic.",
     "steps": [
       [
-        "Follow the total changing from 82.90 to 48.50.",
-        "Copy–move — copy 48.50 from Item A on this receipt."
+        "“Where could the replacement have come from?” Use the total changing from 82.90 to 48.50.",
+        "Same receipt — point from Item A to the total. Copying 48.50 across is a copy–move forgery."
       ],
       [
-        "Splicing — same replacement amount, this time from a different receipt."
+        "Different receipt — follow 48.50 from the donor receipt into the total. That’s splicing."
       ],
       [
-        "Generated text — draw fresh digits with a text renderer.",
-        "Same visible total, three ways to make it. What clues survive when the page is saved?"
+        "Generated text — make the replacement digits from scratch. Here, a text renderer draws 48.50 in a chosen font.",
+        "An AI tool can also generate replacement text. Same visible amount, three possible origins.",
+        "Optional joke — “Please use this information responsibly. Let’s leave our BMVC travel claims out of it.”"
       ]
     ]
   },
@@ -43,9 +45,9 @@ window.BmvcNarration = {
     "source": "Google ML Kit document scanner supports JPEG and PDF output: https://developers.google.com/ml-kit/vision/doc-scanner/android . WhatsApp documents compression for shared photos: https://faq.whatsapp.com/453914586839706/ . JPEG Committee on adoption in digital imaging: https://jpeg.org/items/20230603_JPEG_100.html . Receipt excerpt from ADCD-Net Supplementary Figure B.",
     "steps": [
       [
-        "Capture — a phone or scanner can save the page as JPEG.",
-        "Share — sending a photo through WhatsApp may compress it again.",
-        "Review — the detector receives the page with traces of those saves."
+        "Follow the receipt from someone’s hand to the person checking it. Why focus on JPEG?",
+        "A phone or scanner can save the page as a JPEG. Sending the photo through WhatsApp may compress it again.",
+        "Those saves leave traces in the image. How well can today’s detectors pick out a changed digit?"
       ]
     ]
   },
