@@ -55,12 +55,12 @@ window.BmvcNarration = {
     "source": "Wong et al., ADCD-Net: Robust Document Image Forgery Localization via Adaptive DCT Feature and Hierarchical Content Disentanglement, ICCV 2025. Supplementary Figure B, first Test row, panels Image, GT, DTD, ADCD-Net. Source: https://openaccess.thecvf.com/content/ICCV2025/supplemental/Wong_ADCD-Net_Robust_Document_ICCV_2025_supplemental.pdf . Original published overlays are preserved. Red marks forged or predicted-forged pixels; blue marks pristine or predicted-pristine pixels. This selected qualitative example illustrates capability, not universal accuracy or a ranking. DTD also flags some authentic pixels.",
     "steps": [
       [
-        "Current detectors → receipt + ground truth (Wong et al.).",
-        "Two edited 8s → one in the date, one in the time."
+        "How well do current detectors perform?",
+        "Receipt + ground truth → two edited 8s, one in the date and one in the time."
       ],
       [
-        "DTD + ADCD-Net → both found the 8s. DTD also flagged the 2.",
-        "Pretty good on this receipt, right? What else can they see?"
+        "DTD and ADCD-Net → both found the two 8s.",
+        "Pretty good on this receipt, right? Which cues could they be using?"
       ]
     ]
   },
@@ -68,9 +68,9 @@ window.BmvcNarration = {
     "source": "DTD architecture adapted from Qu et al., Towards Robust Tampered Text Detection in Document Image, CVPR 2023, Figure 4 and §4.2. The diagram groups the encoder and decoder into feature fusion and mask prediction. The receipt is the same published example from Wong et al., ICCV 2025 supplementary Figure B. ADCD-Net also models RGB and DCT features. The six detectors and their input modalities are described in the BMVC paper’s Experimental Setup.",
     "steps": [
       [
-        "Inside DTD → visual head reads RGB pixels.",
-        "Frequency head → JPEG DCT coefficients + quantization table.",
-        "Combine both → predict which pixels were edited."
+        "Focus on DTD → two streams.",
+        "Visual stream → RGB pixels. Frequency stream → DCT coefficients + quantization table.",
+        "Combine both streams → predict which pixels were edited."
       ]
     ]
   },
@@ -78,11 +78,12 @@ window.BmvcNarration = {
     "source": "BMVC manuscript, JPEG Compression Model. This is an illustrative 8 × 8 grid drawn on the displayed receipt excerpt from Wong et al., ICCV 2025 supplementary Figure B. The highlighted cell illustrates one block crossing a digit edge. The diagram does not recover the JPEG grid origin of the source file.",
     "steps": [
       [
-        "Zoom into the date → 8 × 8 blocks."
+        "Quick JPEG refresher → split the image into 8 × 8 pixel blocks."
       ],
       [
-        "DCT → broad patterns and fine detail.",
-        "Quantization → round coefficients, block by block."
+        "Within each block → apply the DCT, then quantize the coefficients.",
+        "The block boundaries form an implicit grid.",
+        "What happens to that grid when someone edits the image?"
       ]
     ]
   },
