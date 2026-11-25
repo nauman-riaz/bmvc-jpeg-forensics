@@ -57,12 +57,13 @@ strong,.headline {font-weight:700}
 .subtitle {font-size:35px;margin-top:22px;color:var(--muted)}
 .authors {margin-top:30px;line-height:1.3;font-size:22px}
 .authors small {color:var(--muted);font-size:16px}
-.affiliations {display:flex;align-items:center;gap:24px;margin-top:30px;width:max-content}
-.affiliations img {height:37px;width:auto}
-.affiliations img:nth-child(1) {height:30px}
-.affiliations img[alt=DeepReader] {height:31px}
-.affiliations img[alt=NUST] {height:38px}
-.affiliations .divider {height:36px;border-left:1px solid var(--rule)}
+.affiliations {display:grid;grid-auto-flow:column;grid-auto-columns:112px;gap:12px;align-items:center;justify-items:center;margin-top:24px;width:max-content}
+.affiliations img {width:auto;max-width:none}
+/* Optical sizes account for the weight of the wordmarks and transparent margins in the artwork. */
+.affiliations img[alt=RPTU] {height:22px}
+.affiliations img[alt=DFKI] {height:60px}
+.affiliations img[alt=DeepReader] {height:52px}
+.affiliations img[alt=NUST] {height:76px}
 .hook {display:grid;grid-template-columns:1fr 520px;gap:64px;align-items:center}
 .hook h2 {font-size:88px;max-width:685px;text-wrap:initial}
 .hook .deck-sub {max-width:540px;font-size:31px}
