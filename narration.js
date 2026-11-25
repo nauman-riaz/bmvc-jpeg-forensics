@@ -45,8 +45,9 @@ window.BmvcNarration = {
     "source": "Google ML Kit document scanner supports JPEG and PDF output: https://developers.google.com/ml-kit/vision/doc-scanner/android . WhatsApp documents compression for shared photos: https://faq.whatsapp.com/453914586839706/ . JPEG Committee on adoption in digital imaging: https://jpeg.org/items/20230603_JPEG_100.html . Receipt excerpt from ADCD-Net Supplementary Figure B.",
     "steps": [
       [
-        "Why JPEG? Phone photo or scan.",
-        "WhatsApp may compress the receipt again."
+        "Focus → JPEG document images.",
+        "Why → one of the main formats for storing images.",
+        "Where → websites, social media, scanners, phones."
       ]
     ]
   },
