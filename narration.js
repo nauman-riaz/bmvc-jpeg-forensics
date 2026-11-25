@@ -91,11 +91,12 @@ window.BmvcNarration = {
     "source": "BMVC manuscript, JPEG Compression Model and Experimental Setup. Both illustrations show the same pasted amount and use the same highlight. The offset is enlarged for legibility. Predictions are introduced with the GAF results.",
     "steps": [
       [
-        "Same pasted amount. Follow the red line."
+        "Paste 48.50 → the patch carries traces of its old grid.",
+        "Follow the red line to the edge of the patch."
       ],
       [
-        "Left: line jumps. Right: line continues.",
-        "Would the detector find both edits?"
+        "Left → the line jumps. Right → it lines up.",
+        "Both amounts were pasted. Would the detector find both?"
       ]
     ]
   },
@@ -103,19 +104,19 @@ window.BmvcNarration = {
     "source": "BMVC Algorithm 1 and Experimental Setup. Animation adapted from the colloquium GAF slide. The schematic uses 32 screen units per 8-pixel block. Control copy translation is (8,184) screen units; snapped translation is (32,192), preserving grid phase. The target text remains underneath the opaque moving patch until it is covered. Each Snap8 boundary expands by fewer than eight actual pixels.",
     "steps": [
       [
-        "DocTamper page → add a second edit.",
-        "Copy 48.50 over 82.90, two ways."
+        "First test → Grid-Aligned Forgery (GAF).",
+        "Same copy–move edit, with and without grid alignment."
       ],
       [
-        "Source and target start at different block positions."
+        "Reveal the grid → compare where each text box starts inside its block."
       ],
       [
-        "Right: expand both boxes to block edges.",
-        "Left: original boxes."
+        "Left → keep the original boxes.",
+        "Right → expand both boxes out to the block edges."
       ],
       [
-        "Only the right patch lines up.",
-        "Same text, destination and JPEG settings."
+        "Same text, destination and JPEG settings. Only the right-hand paste lines up.",
+        "Does the detector still flag it?"
       ]
     ]
   },
@@ -123,11 +124,12 @@ window.BmvcNarration = {
     "source": "BMVC Figure 1(a), att1_bag_gt_overlay.png and att1_bag_pred_overlay.png. The figure does not identify the detector. It shows distinct grid-aligned and standard edited regions within one document, not a before/after pair of the same edit. Across all six detectors, active main-table.tex TestingSet rows give paired copy–move pixel F1 decreases of 8.6–47.0 percentage points.",
     "steps": [
       [
-        "One page. Red = aligned, blue = standard."
+        "Ground truth → different edits on one real page.",
+        "Red = aligned edits. Blue = standard edits."
       ],
       [
-        "“one-line” found. Dashed box missed.",
-        "What about the other detectors?"
+        "Green prediction → “one-line” found, aligned word in the dashed box missed.",
+        "Is this just one example? Compare all six detectors."
       ]
     ]
   },
@@ -135,12 +137,12 @@ window.BmvcNarration = {
     "source": "Active main-table.tex TestingSet rows: paired copy–move pixel F1 for all six detectors. Hollow markers are the matched unaligned controls and filled markers are GAF. Losses range from 8.6 to 47.0 percentage points. Active tsroie-table.tex shows lower paired copy–move F1 for all six DocTamper-trained detectors on Tampered-SROIE. The control and intervention use the same source and target text, forgery operation and JPEG schedule, with Snap8 applied only in GAF. The TestingSet CAT-Net DFR is 0.230 for unaligned copy–move and 0.570 for GAF-CM. The GAF-S and GAF-G results are discussed in the paper’s quantitative analysis.",
     "steps": [
       [
-        "Aligned copy–move → all six lose F1.",
-        "DocTamper: down 8.6–47 percentage points."
+        "DocTamper copy–move → circle = unaligned, square = aligned.",
+        "All six lose pixel-level F1 → down 8.6–47 percentage points."
       ],
       [
-        "CAT-Net failure rate: 0.23 → 0.57.",
-        "Next: keep the edit, move the grid."
+        "CAT-Net → detection failure rate rises from 0.23 to 0.57.",
+        "What if we keep the edit in place and shift the grid?"
       ]
     ]
   },
@@ -148,17 +150,18 @@ window.BmvcNarration = {
     "source": "BMVC Algorithm 2 and Experimental Setup. PRC uses edge replication, a fixed (4,4) offset, and no extra recompression after cropping.",
     "steps": [
       [
-        "Same edited page. Left: original grid."
+        "Second test → Pad–Recompress–Crop (PRC).",
+        "Same edited page on both sides. Left keeps the original grid."
       ],
       [
-        "Pad top and left: 4 pixels, half a block."
+        "Pad the top and left → four pixels, half a JPEG block."
       ],
       [
-        "Recompress from the new corner. Same JPEG settings."
+        "Recompress at the same settings → blocks now start at the padded corner."
       ],
       [
-        "Crop back to original size.",
-        "Same words. Grid stays shifted."
+        "Crop away the padding → original page size, same words, same edit.",
+        "The grid stays shifted. What does the detector flag now?"
       ]
     ]
   },
@@ -166,14 +169,15 @@ window.BmvcNarration = {
     "source": "Figure 1(b) shows the same unnamed detector before and after PRC. Figure 4 is a separate DocTamper TestingSet example, using the image, corresponding ground truth and DTD column from the same bottom row of prc_comparison_seed_123.png. Figure 4 uses red for ground truth, blue for true positives and yellow for false positives.",
     "steps": [
       [
-        "Original grid → two words flagged green."
+        "Original grid → both instances of “that” flagged in green."
       ],
       [
-        "Shifted grid → several more lines flagged."
+        "Same page and detector → green now spreads across several lines.",
+        "Which marks are false alarms? Check the next page’s ground truth."
       ],
       [
-        "Second page: only two red regions edited.",
-        "DTD: blue correct, yellow false alarms."
+        "Second page → only the two red regions were edited.",
+        "DTD → blue marks correctly flagged pixels. Yellow marks genuine text flagged as forged."
       ]
     ]
   },
@@ -181,11 +185,11 @@ window.BmvcNarration = {
     "source": "BMVC paper, Table 1, DocTamper TestingSet. The DocTamper Original control and PRC use matching recompression schedules on the same pre-forged pages. Pixel F1 declines for five detectors by 7.8 to 67.9 percentage points. ADCD-Net gains 3.9 points. DTD’s PRC false-positive area is 0.177, calculated per image using the full image area and averaged across the test set.",
     "steps": [
       [
-        "Five of six lose F1: 7.8–67.9 percentage points.",
-        "Exception: ADCD-Net gains 3.9 points."
+        "After the shift → five of six lose 7.8–67.9 F1 percentage points.",
+        "One exception → ADCD-Net gains 3.9 points."
       ],
       [
-        "DTD false alarms → 17.7% of the page, on average."
+        "Recall DTD’s yellow overlay → false alarms cover 17.7% of the whole page on average."
       ]
     ]
   },
@@ -193,8 +197,9 @@ window.BmvcNarration = {
     "source": "BMVC paper, Figure 1(a–b), Table 1, Conclusions and Limitations. The left image is a crop of the GAF prediction with the missed aligned edit outlined. The right image is a crop of the PRC prediction on the shifted grid. False alarms are quantified using the annotated test pages. Both probes construct their test inputs without querying the detector. The evaluation covers six JPEG-aware RGB+DCT models.",
     "steps": [
       [
-        "Align the edit → a forged word can be missed.",
-        "Shift the grid → genuine words can be flagged."
+        "GAF → align the edit, and a detector can miss a forged word.",
+        "PRC → shift the grid, and it can flag genuine words.",
+        "Both tests use matched pages and need no detector queries."
       ]
     ]
   },
@@ -202,8 +207,8 @@ window.BmvcNarration = {
     "source": "The opening receipt shows one changed digit. The example of a detector circling it is hypothetical. PRC tests how shifting the JPEG grid affects predictions on the same edited page.",
     "steps": [
       [
-        "Back to the 9. What made the detector point there?",
-        "Same words, different prediction. Thank you."
+        "Back to the receipt → imagine a detector circled the 9. What made it point there?",
+        "Same words, different grid, different prediction. Thank you."
       ]
     ]
   }
